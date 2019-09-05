@@ -164,12 +164,14 @@
     <ClCompile Include="..\Light Server\src\LPI\ClearNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\LPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\NonAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light Server\src\LPI\SliderAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\SolidNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\Renderer.cpp" />
     <ClCompile Include="..\Light Server\src\StringProcessor.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Unit Tests\FixedSizeCharBuffer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\ClearNoneAnimatedLPI_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPI\SliderAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\SolidNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Renderer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\StringProcessor_UnitTests.cpp" />

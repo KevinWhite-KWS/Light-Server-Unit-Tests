@@ -1006,4 +1006,126 @@ namespace LS
 			Assert::AreEqual<uint8_t>(255, lpi.duration);
 		}
 	};
+
+	TEST_CLASS(StringProcesor_ExtractBoolFromHexEncoded)
+	{
+	public:
+		// Negative test cases
+		TEST_METHOD(NotValid_NullString)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			bool isValid;
+
+			// act
+			bool extractedBool = p->ExtractBoolFromHexEncoded(nullptr, isValid);
+
+			// assert
+			Assert::IsFalse(isValid);
+		}
+
+		TEST_METHOD(NotValid_EmptyString)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			bool isValid;
+
+			// act
+			bool extractedBool = p->ExtractBoolFromHexEncoded("", isValid);
+
+			// assert
+			Assert::IsFalse(isValid);
+		}
+
+		TEST_METHOD(NotValid_NegativeSymbol)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			bool isValid;
+
+			// act
+			bool extractedBool = p->ExtractBoolFromHexEncoded("-", isValid);
+
+			// assert
+			Assert::IsFalse(isValid);
+		}
+
+		TEST_METHOD(NotValid_ValueOf2)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			bool isValid;
+
+			// act
+			bool extractedBool = p->ExtractBoolFromHexEncoded("2", isValid);
+
+			// assert
+			Assert::IsFalse(isValid);
+		}
+
+		TEST_METHOD(NotValid_ValueOfA)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			bool isValid;
+
+			// act
+			bool extractedBool = p->ExtractBoolFromHexEncoded("A", isValid);
+
+			// assert
+			Assert::IsFalse(isValid);
+		}
+
+		TEST_METHOD(Valid_Value0)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			bool isValid;
+
+			// act
+			bool extractedBool = p->ExtractBoolFromHexEncoded("0", isValid);
+
+			// assert
+			Assert::IsTrue(isValid);
+		}
+
+		TEST_METHOD(Valid_Value1)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			bool isValid;
+
+			// act
+			bool extractedBool = p->ExtractBoolFromHexEncoded("1", isValid);
+
+			// assert
+			Assert::IsTrue(isValid);
+		}
+
+		TEST_METHOD(Valid_ReturnValueIsFalse)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			bool isValid;
+
+			// act
+			bool extractedBool = p->ExtractBoolFromHexEncoded("0", isValid);
+
+			// assert
+			Assert::IsFalse(extractedBool);
+		}
+
+		TEST_METHOD(Valid_ReturnValueIsTrue)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			bool isValid;
+
+			// act
+			bool extractedBool = p->ExtractBoolFromHexEncoded("1", isValid);
+
+			// assert
+			Assert::IsTrue(extractedBool);
+		}
+	};
 }
