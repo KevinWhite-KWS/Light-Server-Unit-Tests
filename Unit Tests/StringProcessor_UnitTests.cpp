@@ -1128,4 +1128,93 @@ namespace LS
 			Assert::IsTrue(extractedBool);
 		}
 	};
+
+	TEST_CLASS(StringProcesor_ConvertNumberToHexEncoded)
+	{
+	public:
+		// Negative test cases
+		TEST_METHOD(NotValid_NullString)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			char putBuffer[3] = "**";
+
+			// act
+			p->ConvertNumberToHexEncoded(nullptr, 90);
+
+			// assert
+			int putBufferCompare = strcmp("**", putBuffer);
+			Assert::AreEqual<int>(0, putBufferCompare);
+		}
+
+		// Positive test cases
+		TEST_METHOD(Valid_00Expected)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			char putBuffer[3] = "**";
+
+			// act
+			p->ConvertNumberToHexEncoded(putBuffer, 0);
+
+			// assert
+			int putBufferCompare = strcmp("00", putBuffer);
+			Assert::AreEqual<int>(0, putBufferCompare);
+		}
+
+		TEST_METHOD(Valid_32Expected)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			char putBuffer[3] = "**";
+
+			// act
+			p->ConvertNumberToHexEncoded(putBuffer, 50);
+
+			// assert
+			int putBufferCompare = strcmp("32", putBuffer);
+			Assert::AreEqual<int>(0, putBufferCompare);
+		}
+		TEST_METHOD(Valid_64Expected)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			char putBuffer[3] = "**";
+
+			// act
+			p->ConvertNumberToHexEncoded(putBuffer, 100);
+
+			// assert
+			int putBufferCompare = strcmp("64", putBuffer);
+			Assert::AreEqual<int>(0, putBufferCompare);
+		}
+
+		TEST_METHOD(Valid_C8Expected)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			char putBuffer[3] = "**";
+
+			// act
+			p->ConvertNumberToHexEncoded(putBuffer, 200);
+
+			// assert
+			int putBufferCompare = strcmp("C8", putBuffer);
+			Assert::AreEqual<int>(0, putBufferCompare);
+		}
+
+		TEST_METHOD(Valid_FFExpected)
+		{
+			// arrange
+			StringProcessor* p = new StringProcessor();
+			char putBuffer[3] = "**";
+
+			// act
+			p->ConvertNumberToHexEncoded(putBuffer, 255);
+
+			// assert
+			int putBufferCompare = strcmp("FF", putBuffer);
+			Assert::AreEqual<int>(0, putBufferCompare);
+		}
+	};
 }

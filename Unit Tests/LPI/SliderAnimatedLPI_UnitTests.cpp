@@ -352,8 +352,8 @@ namespace LS
 		TEST_METHOD(NextRIReturnsTrue_InsIsValid)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer(VALID_LPI_INS);
@@ -371,8 +371,8 @@ namespace LS
 		TEST_METHOD(NextRIReturnsFalse_LPIInvalid)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer(INVALID_LPI_INS);
@@ -390,8 +390,8 @@ namespace LS
 		TEST_METHOD(NextRIReturnsExpectedRI_Step1In8LEDs2LEDWidthSlider_Near)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer("03010000020FF000000FF00");
@@ -404,15 +404,15 @@ namespace LS
 
 			// assert
 			char* pRiBuffer = riBuffer.GetBuffer();
-			int riBufferCompare = strcmp("FF00000200FF006", pRiBuffer);
+			int riBufferCompare = strcmp("FF00000200FF0006", pRiBuffer);
 			Assert::AreEqual<int>(0, riBufferCompare);
 		}
 
 		TEST_METHOD(NextRIReturnsExpectedRI_Step4In8LEDs2LEDWidthSlider_Near)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer("03010000020FF000000FF00");
@@ -424,19 +424,20 @@ namespace LS
 			bool nextRiRet = lpi.GetNextRI(&riBuffer); // step 1
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 2
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 3
+			riBuffer.ClearBuffer();
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 4
 
 			// assert
 			char* pRiBuffer = riBuffer.GetBuffer();
-			int riBufferCompare = strcmp("00FF0003FF00000200FF003", pRiBuffer);
+			int riBufferCompare = strcmp("00FF0003FF00000200FF0003", pRiBuffer);
 			Assert::AreEqual<int>(0, riBufferCompare);
 		}
 
 		TEST_METHOD(NextRIReturnsExpectedRI_Step7In8LEDs2LEDWidthSlider_Near)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer("03010000020FF000000FF00");
@@ -451,19 +452,20 @@ namespace LS
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 4
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 5
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 6
+			riBuffer.ClearBuffer();
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 7
 
 			// assert
 			char* pRiBuffer = riBuffer.GetBuffer();
-			int riBufferCompare = strcmp("00FF0007FF000001", pRiBuffer);
+			int riBufferCompare = strcmp("00FF0006FF000002", pRiBuffer);
 			Assert::AreEqual<int>(0, riBufferCompare);
 		}
 
 		TEST_METHOD(NextRIReturnsFalseNoMoreRIs_Step8In8LEDs2LEDWidthSlider_Near)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer("03010000020FF000000FF00");
@@ -479,6 +481,7 @@ namespace LS
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 5
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 6
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 7
+			riBuffer.ClearBuffer();
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 8
 
 			// assert
@@ -488,8 +491,8 @@ namespace LS
 		TEST_METHOD(NextRIReturnsExpectedRI_Step1In8LEDs2LEDWidthSlider_Far)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer("03010000021FF000000FF00");
@@ -502,15 +505,15 @@ namespace LS
 
 			// assert
 			char* pRiBuffer = riBuffer.GetBuffer();
-			int riBufferCompare = strcmp("00FF0007FF000001", pRiBuffer);
+			int riBufferCompare = strcmp("00FF0006FF000002", pRiBuffer);
 			Assert::AreEqual<int>(0, riBufferCompare);
 		}
 
 		TEST_METHOD(NextRIReturnsExpectedRI_Step4In8LEDs2LEDWidthSlider_Far)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer("03010000021FF000000FF00");
@@ -522,19 +525,20 @@ namespace LS
 			bool nextRiRet = lpi.GetNextRI(&riBuffer); // step 1
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 2
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 3
+			riBuffer.ClearBuffer();
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 4
 
 			// assert
 			char* pRiBuffer = riBuffer.GetBuffer();
-			int riBufferCompare = strcmp("00FF0003FF00000200FF003", pRiBuffer);
+			int riBufferCompare = strcmp("00FF0003FF00000200FF0003", pRiBuffer);
 			Assert::AreEqual<int>(0, riBufferCompare);
 		}
 
 		TEST_METHOD(NextRIReturnsExpectedRI_Step7In8LEDs2LEDWidthSlider_Far)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer("03010000021FF000000FF00");
@@ -549,19 +553,20 @@ namespace LS
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 4
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 5
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 6
+			riBuffer.ClearBuffer();
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 7
 
 			// assert
 			char* pRiBuffer = riBuffer.GetBuffer();
-			int riBufferCompare = strcmp("FF00000100FF0007", pRiBuffer);
+			int riBufferCompare = strcmp("FF00000200FF0006", pRiBuffer);
 			Assert::AreEqual<int>(0, riBufferCompare);
 		}
 
 		TEST_METHOD(NextRIReturnsFalseNoMoreRIs_Step8In8LEDs2LEDWidthSlider_Far)
 		{
 			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
+			LEDConfig ledConfig = LEDConfig(8);
+			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(100);
 			StringProcessor stringProcessor = StringProcessor();
 			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 			lpiBuffer.LoadFromBuffer("03010000021FF000000FF00");
@@ -577,6 +582,7 @@ namespace LS
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 5
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 6
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 7
+			riBuffer.ClearBuffer();
 			nextRiRet = lpi.GetNextRI(&riBuffer); // step 8
 
 			// assert
