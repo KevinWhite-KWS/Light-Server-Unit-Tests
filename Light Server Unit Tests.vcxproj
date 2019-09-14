@@ -162,6 +162,7 @@
   <ItemGroup>
     <ClCompile Include="..\Light Server\src\FixedSizeCharBuffer.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\ClearNonAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light Server\src\LPI\FadeAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\LPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\NonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\PatternNonAnimatedLPI.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="..\Light Server\src\LPI\SolidNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\Renderer.cpp" />
     <ClCompile Include="..\Light Server\src\StringProcessor.cpp" />
+    <ClCompile Include="Unit Tests\LPI\FadeAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Unit Tests\FixedSizeCharBuffer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\ClearNoneAnimatedLPI_UnitTests.cpp" />
