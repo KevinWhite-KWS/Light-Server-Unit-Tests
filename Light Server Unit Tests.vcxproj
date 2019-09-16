@@ -168,6 +168,7 @@
     <ClCompile Include="..\Light Server\src\LPI\PatternNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\SliderAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\SolidNonAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light Server\src\LPI\StochasticNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\Renderer.cpp" />
     <ClCompile Include="..\Light Server\src\StringProcessor.cpp" />
     <ClCompile Include="Unit Tests\LPI\FadeAnimatedLPI_UnitTests.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="Unit Tests\LPI\PatternNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\SliderAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\SolidNoneAnimatedLPI_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPI\StochasticNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Renderer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\StringProcessor_UnitTests.cpp" />
   </ItemGroup>
