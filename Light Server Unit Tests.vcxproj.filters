@@ -36,9 +36,6 @@
     <ClCompile Include="..\Light Server\src\FixedSizeCharBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\ClearNoneAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Light Server\src\LPI\ClearNonAnimatedLPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,31 +45,16 @@
     <ClCompile Include="..\Light Server\src\LPI\NonAnimatedLPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\SolidNoneAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Light Server\src\LPI\SolidNonAnimatedLPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Light Server\src\LPI\SliderAnimatedLPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\SliderAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Light Server\src\LPI\PatternNonAnimatedLPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\PatternNoneAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Light Server\src\LPI\FadeAnimatedLPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\FadeAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\StochasticNoneAnimatedLPI_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Light Server\src\LPI\StochasticNonAnimatedLPI.cpp">
@@ -82,6 +64,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Unit Tests\LPI\BlocksNoneAnimatedLPI_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light Server\src\LPE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -105,6 +93,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Light Server\src\ValueDomainTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mocks\Mock_LPE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LPI_UnitTestHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

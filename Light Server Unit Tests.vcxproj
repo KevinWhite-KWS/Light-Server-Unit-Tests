@@ -161,6 +161,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Light Server\src\FixedSizeCharBuffer.cpp" />
+    <ClCompile Include="..\Light Server\src\LPE.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\BlocksNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\ClearNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\FadeAnimatedLPI.cpp" />
@@ -172,15 +173,10 @@
     <ClCompile Include="..\Light Server\src\LPI\StochasticNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\Renderer.cpp" />
     <ClCompile Include="..\Light Server\src\StringProcessor.cpp" />
+    <ClCompile Include="Unit Tests\LPE_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\BlocksNoneAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\FadeAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Unit Tests\FixedSizeCharBuffer_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\ClearNoneAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\PatternNoneAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\SliderAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\SolidNoneAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\StochasticNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Renderer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\StringProcessor_UnitTests.cpp" />
   </ItemGroup>
@@ -196,7 +192,9 @@
     <ClInclude Include="..\Light Server\src\Renderer.h" />
     <ClInclude Include="..\Light Server\src\StringProcessor.h" />
     <ClInclude Include="..\Light Server\src\ValueDomainTypes.h" />
+    <ClInclude Include="Helpers\LPI_UnitTestHelper.h" />
     <ClInclude Include="mocks\Mock_Adafruit_NeoPixel.h" />
+    <ClInclude Include="mocks\Mock_LPE.h" />
     <ClInclude Include="mocks\Mock_Renderer.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
