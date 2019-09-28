@@ -14,6 +14,9 @@
 #pragma once
 
 #include "../../Light Server/src/LPI/LPI.h"
+#include "../../Light Server/src/LPI/ClearNonAnimatedLPI.h"
+#include "../../Light Server/src/LPI/SolidNonAnimatedLPI.h"
+#include "../../Light Server/src/LPI/BlocksNonAnimatedLPI.h"
 
 namespace LS {
 	class LPI_UnitTestHelper {
@@ -62,6 +65,12 @@ namespace LS {
 				// Instantiate the LPI effect depending on the opcode
 				LPI* lpi = nullptr;
 				switch (opcode) {
+					case 0:
+						lpi = new ClearNonAnimatedLPI(ledConfig, stringProcessor);
+						break;
+					case 1:
+						lpi = new SolidNonAnimatedLPI(ledConfig, stringProcessor);
+						break;
 					case 6:
 						lpi = new BlocksNonAnimatedLPI(ledConfig, stringProcessor);
 						break;

@@ -1,6 +1,9 @@
 #include "CppUnitTest.h"
 #include "../../../Light Server/src/LPI/ClearNonAnimatedLPI.h"
 
+#include "../../Helpers/LPI_UnitTestHelper.h"
+#include "../../../Light Server/src/LPE.h"
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #define VALID_LPI_INS		"00010000"
@@ -9,161 +12,107 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace LS
 {
-	TEST_CLASS(ClearNonAnimatedLPI_GetTotalNumberOfSteps)
-	{
-	public:
-		TEST_METHOD(IsOne)
-		{
-			// arrange
-			LEDConfig ledConfig = LEDConfig(10);
-			StringProcessor stringProcessor = StringProcessor();
-			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
-			lpiBuffer.LoadFromBuffer(VALID_LPI_INS);
-			LPIInstruction lpiIns = LPIInstruction(0, 1, &lpiBuffer);
-			ClearNonAnimatedLPI lpi = ClearNonAnimatedLPI(&lpiIns, &ledConfig, &stringProcessor);
+	namespace LPIS {
+		namespace Clear {
+			TEST_CLASS(ClearNonAnimatedLPI_GetTotalNumberOfSteps)
+			{
+			public:
+				TEST_METHOD(IsOne)
+				{
+					// arrange
+					LPI_UnitTestHelper lpiInstantiator = LPI_UnitTestHelper(LPI_Clear, VALID_LPI_INS);
+					ClearNonAnimatedLPI* lpi = (ClearNonAnimatedLPI*)lpiInstantiator.InstantiateLPI();
 
-			// act
-			uint16_t steps = lpi.GetTotalNumberOfSteps();
+					// act
+					uint16_t steps = lpi->GetTotalNumberOfSteps();
 
-			// assert
-			Assert::AreEqual<float>(1, steps);
+					// assert
+					Assert::AreEqual<float>(1, steps);
+				}
+			};
+
+			TEST_CLASS(ClearNonAnimatedLPI_GetOpCode)
+			{
+			public:
+				TEST_METHOD(Is0)
+				{
+					// arrange
+					LPI_UnitTestHelper lpiInstantiator = LPI_UnitTestHelper(LPI_Clear, VALID_LPI_INS);
+					ClearNonAnimatedLPI* lpi = (ClearNonAnimatedLPI*)lpiInstantiator.InstantiateLPI();
+
+					// act
+					uint16_t opcode = lpi->GetOpCode();
+
+					// assert
+					Assert::AreEqual<float>(0, opcode);
+				}
+			};
+
+			TEST_CLASS(ClearNonAnimatedLPI_Validate)
+			{
+			public:
+				TEST_METHOD(ValiateReturnsTrue_LPIValid)
+				{
+					// arrange
+					LPI_UnitTestHelper lpiInstantiator = LPI_UnitTestHelper(LPI_Clear, VALID_LPI_INS);
+					ClearNonAnimatedLPI* lpi = (ClearNonAnimatedLPI*)lpiInstantiator.InstantiateLPI();
+
+					// act
+					bool isValid = lpi->Reset(lpiInstantiator.lpiInstruction);
+
+					// assert
+					Assert::AreEqual<bool>(true, isValid);
+					lpiInstantiator.CleanUp(lpi);
+				}
+
+				TEST_METHOD(ValiateReturnsFalse_LPIIsNull)
+				{
+					// arrange
+					LPI_UnitTestHelper lpiInstantiator = LPI_UnitTestHelper(LPI_Clear, nullptr);
+					ClearNonAnimatedLPI* lpi = (ClearNonAnimatedLPI*)lpiInstantiator.InstantiateLPI();
+
+					// act
+					bool isValid = lpi->Reset(nullptr);
+
+					// assert
+					Assert::AreEqual<bool>(false, isValid);
+					lpiInstantiator.CleanUp(lpi);
+				}
+			};
+
+			TEST_CLASS(ClearNonAnimatedLPI_GetNextRI)
+			{
+			public:
+				TEST_METHOD(NextRIReturnsTrue_LPIValid)
+				{
+					// arrange
+					LPI_UnitTestHelper lpiInstantiator = LPI_UnitTestHelper(LPI_Clear, VALID_LPI_INS);
+					ClearNonAnimatedLPI* lpi = (ClearNonAnimatedLPI*)lpiInstantiator.InstantiateLPI();
+					FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(1000);
+
+					// act
+					bool isValid = lpi->GetNextRI(&riBuffer);
+
+					// assert
+					Assert::AreEqual<bool>(true, isValid);
+					lpiInstantiator.CleanUp(lpi);
+				}
+
+				TEST_METHOD(NextRIReturnsTrue_RIInstructionAsExpected)
+				{
+					// arrange
+					LPI_UnitTestHelper lpiInstantiator = LPI_UnitTestHelper(LPI_Clear, VALID_LPI_INS);
+					ClearNonAnimatedLPI* lpi = (ClearNonAnimatedLPI*)lpiInstantiator.InstantiateLPI();
+					FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(1000);
+
+					// act
+					bool isValid = lpi->GetNextRI(&riBuffer);
+
+					// assert
+					Assert::AreEqual<bool>(true, lpiInstantiator.VerifyRIBuffer("00000001R", &riBuffer));
+					lpiInstantiator.CleanUp(lpi);
+				}
+			};
 		}
-	};
-
-	TEST_CLASS(ClearNonAnimatedLPI_GetOpCode)
-	{
-	public:
-		TEST_METHOD(Is0)
-		{
-			// arrange
-			LEDConfig ledConfig = LEDConfig(10);
-			StringProcessor stringProcessor = StringProcessor();
-			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
-			lpiBuffer.LoadFromBuffer(VALID_LPI_INS);
-			LPIInstruction lpiIns = LPIInstruction(0, 1, &lpiBuffer);
-			ClearNonAnimatedLPI lpi = ClearNonAnimatedLPI(&lpiIns, &ledConfig, &stringProcessor);
-
-			// act
-			uint8_t opcode = lpi.GetOpCode();
-
-			// assert
-			Assert::AreEqual<uint8_t>(0, opcode);
-		}
-	};
-
-	TEST_CLASS(ClearNonAnimatedLPI_Validate)
-	{
-	public:
-		TEST_METHOD(ValiateReturnsTrue_LPIValid)
-		{
-			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			StringProcessor stringProcessor = StringProcessor();
-			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
-			lpiBuffer.LoadFromBuffer(VALID_LPI_INS);
-			LPIInstruction lpiIns = LPIInstruction(0, 1, &lpiBuffer);
-			ClearNonAnimatedLPI lpi = ClearNonAnimatedLPI(&lpiIns, &ledConfig, &stringProcessor);
-
-			// act
-			bool isValid = lpi.Validate();
-
-			// assert
-			Assert::AreEqual<bool>(true, isValid);
-		}
-
-		TEST_METHOD(ValiateReturnsFalse_OpCodeIsNot00)
-		{
-			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			StringProcessor stringProcessor = StringProcessor();
-			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
-			lpiBuffer.LoadFromBuffer("01010000");
-			LPIInstruction lpiIns = LPIInstruction(1, 1, &lpiBuffer);
-			ClearNonAnimatedLPI lpi = ClearNonAnimatedLPI(&lpiIns, &ledConfig, &stringProcessor);
-
-			// act
-			bool isValid = lpi.Validate();
-
-			// assert
-			Assert::AreEqual<bool>(false, isValid);
-		}
-
-		TEST_METHOD(ValiateReturnsFalse_LPIIsNull)
-		{
-			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			StringProcessor stringProcessor = StringProcessor();
-			ClearNonAnimatedLPI lpi = ClearNonAnimatedLPI(nullptr, &ledConfig, &stringProcessor);
-
-			// act
-			bool isValid = lpi.Validate();
-
-			// assert
-			Assert::AreEqual<bool>(false, isValid);
-		}
-	};
-
-	TEST_CLASS(ClearNonAnimatedLPI_GetNextRI)
-	{
-	public:
-		TEST_METHOD(NextRIReturnsTrue_LPIValid)
-		{
-			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
-			StringProcessor stringProcessor = StringProcessor();
-			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
-			lpiBuffer.LoadFromBuffer(VALID_LPI_INS);
-			LPIInstruction lpiIns = LPIInstruction(0, 1, &lpiBuffer);
-			ClearNonAnimatedLPI lpi = ClearNonAnimatedLPI(&lpiIns, &ledConfig, &stringProcessor);
-
-
-			// act
-			lpi.Validate();
-			bool nextRiRet = lpi.GetNextRI(&riBuffer);
-
-			// assert
-			Assert::AreEqual<bool>(true, nextRiRet);
-		}
-
-		TEST_METHOD(NextRIReturnsFalse_LPIInvalid)
-		{
-			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
-			StringProcessor stringProcessor = StringProcessor();
-			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
-			lpiBuffer.LoadFromBuffer(INVALID_LPI_INS);
-			LPIInstruction lpiIns = LPIInstruction(1, 1, &lpiBuffer);
-			ClearNonAnimatedLPI lpi = ClearNonAnimatedLPI(&lpiIns, &ledConfig, &stringProcessor);
-
-			// act
-			lpi.Validate();
-			bool nextRiRet = lpi.GetNextRI(&riBuffer);
-
-			// assert
-			Assert::AreEqual<bool>(false, nextRiRet);
-		}
-
-		TEST_METHOD(NextRIReturnsTrue_RIInstructionAsExpected)
-		{
-			// arrange
-			LEDConfig ledConfig = LEDConfig(100);
-			FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(10);
-			StringProcessor stringProcessor = StringProcessor();
-			FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
-			lpiBuffer.LoadFromBuffer(INVALID_LPI_INS);
-			LPIInstruction lpiIns = LPIInstruction(0, 1, &lpiBuffer);
-			ClearNonAnimatedLPI lpi = ClearNonAnimatedLPI(&lpiIns, &ledConfig, &stringProcessor);
-
-			// act
-			lpi.Validate();
-			bool nextRiRet = lpi.GetNextRI(&riBuffer);
-
-			// assert
-			char* pRiBuffer = riBuffer.GetBuffer();
-			int riBufferCompare = strcmp("00000001R", pRiBuffer);
-			Assert::AreEqual<int>(0, riBufferCompare);
-		}
-	};
+	}
 }
