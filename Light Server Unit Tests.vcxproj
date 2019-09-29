@@ -178,7 +178,9 @@
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Unit Tests\FixedSizeCharBuffer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\ClearNoneAnimatedLPI_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPI\PatternNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\SolidNoneAnimatedLPI_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPI\StochasticNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Renderer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\StringProcessor_UnitTests.cpp" />
   </ItemGroup>

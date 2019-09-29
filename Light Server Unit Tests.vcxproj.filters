@@ -78,6 +78,12 @@
     <ClCompile Include="Unit Tests\LPI\SolidNoneAnimatedLPI_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Unit Tests\LPI\PatternNoneAnimatedLPI_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPI\StochasticNoneAnimatedLPI_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
