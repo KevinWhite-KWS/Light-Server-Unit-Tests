@@ -17,6 +17,8 @@
 #include "../../Light Server/src/LPI/ClearNonAnimatedLPI.h"
 #include "../../Light Server/src/LPI/SolidNonAnimatedLPI.h"
 #include "../../Light Server/src/LPI/PatternNonAnimatedLPI.h"
+#include "../../Light Server/src/LPI/SliderAnimatedLPI.h"
+#include "../../Light Server/src/LPI/FadeAnimatedLPI.h"
 #include "../../Light Server/src/LPI/StochasticNonAnimatedLPI.h"
 #include "../../Light Server/src/LPI/BlocksNonAnimatedLPI.h"
 
@@ -75,6 +77,12 @@ namespace LS {
 						break;
 					case 2:
 						lpi = new PatternNonAnimatedLPI(ledConfig, stringProcessor);
+						break;
+					case 3:
+						lpi = new SliderAnimatedLPI(ledConfig, stringProcessor);
+						break;
+					case 4:
+						lpi = new FadeAnimatedLPI(ledConfig, stringProcessor);
 						break;
 					case 5:
 						lpi = new StochasticNonAnimatedLPI(ledConfig, stringProcessor);
