@@ -185,6 +185,7 @@
     <ClCompile Include="Unit Tests\LPI\StochasticNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Renderer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\StringProcessor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Test_UnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Light Server\Light Server.vcxproj">
@@ -198,6 +199,7 @@
     <ClInclude Include="..\Light Server\src\Renderer.h" />
     <ClInclude Include="..\Light Server\src\StringProcessor.h" />
     <ClInclude Include="..\Light Server\src\ValueDomainTypes.h" />
+    <ClInclude Include="Helpers\LPE_UnitTestHelper.h" />
     <ClInclude Include="Helpers\LPI_UnitTestHelper.h" />
     <ClInclude Include="mocks\Mock_Adafruit_NeoPixel.h" />
     <ClInclude Include="mocks\Mock_LPE.h" />

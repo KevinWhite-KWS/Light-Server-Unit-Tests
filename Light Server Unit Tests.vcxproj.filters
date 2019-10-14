@@ -90,6 +90,9 @@
     <ClCompile Include="Unit Tests\LPI\FadeAnimatedLPI_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Unit Tests\Test_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -117,6 +120,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helpers\LPI_UnitTestHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers\LPE_UnitTestHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
