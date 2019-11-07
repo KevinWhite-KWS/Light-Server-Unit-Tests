@@ -662,5 +662,1528 @@ namespace LS
 				Assert::AreEqual<int>(Valid, result.GetCode());
 			}
 		};
+
+		TEST_CLASS(GetNextRI) {
+			public:
+				TEST_METHOD(NoLPLoaded_FalseExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPE();
+
+					// act
+					bool result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(false, result);
+				}
+
+				TEST_METHOD(LPLoaded_TrueExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"00010000\" } }");
+
+					// act
+					bool result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+				}
+
+				TEST_METHOD(InvalidLPLoaded_FalseExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"00000000\" } }");
+
+					// act
+					bool result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(false, result);
+				}
+
+				TEST_METHOD(LPSingleRunClearInstruction_ClearRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"00010000\" } }");
+
+					// act
+					bool result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(GetFrame5FromClearLP_5FramesTotal_ClearRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"00050000\" } }");
+
+					// act
+					bool result;
+					for(int i = 0; i < 5; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(GetFrame6FromClearLP_5FramesTotal_FalseExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"00050000\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 6; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+
+					// assert
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(false, result);
+				}
+
+				TEST_METHOD(GetFrame2FromTwoInstructionsLP_SolidRedRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"0101000000FF00\",  \"instruction\":\"01010000FF0000\"} }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 2; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SolidRedInLoop5Iterations_FifthFrame_SolidRedRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"01010000FF0000\" } },  \"instruction\":\"00010000\"} }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 5; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat (1..1):
+					ins: solid red
+				ins: clear (****)
+
+				This ensures that the instruction pointer is placed at the correct
+				instruction (clear) when popping to the root instructions node.
+				*/
+				TEST_METHOD(SolidRedInLoop5Iteration_2ndFrame_ClearRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 1, \"instructions\" : { \"instruction\" : \"01010000FF0000\" } },  \"instruction\":\"00010000\"} }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 2; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				ins: solid red
+				repeat (1..5):
+					ins: solid green
+				ins: solid blue (****)
+
+				This test ensures that the instruction pointer points to the solid
+				blue on execution of the 7th frame.  That is, popping from the repeat
+				ensures that it pops to the instruction following the repeat.
+				*/
+				TEST_METHOD(ClearThenSolidRedInLoop5IterationThenClear_SeventhFrame_ClearRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"01010000FF0000\", \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\" } },  \"instruction\":\"010100000000FF\"} }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 7; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("0000FF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SolidRedInLoop5IterationThenSolidGreenThenClear_SeventhFrame_ClearRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"01010000FF0000\" } },  \"instruction\":\"0101000000FF00\", \"instruction\":\"00010000\"} }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 7; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(FiveLoopThenClearThenFiveLoopThenClear_12thFrame_ClearRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"01010000FF0000\" } },  \"instruction\":\"0101000000FF00\", \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"01010000FF0000\" } }, \"instruction\":\"00010000\"} }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 12; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SolidInstructionsInInfiniteLoop_1stFrame_SolidRedRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 0, \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"instruction\" : \"0101000000FF00\" } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 1; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SolidInstructionsIn1Loop_2ndFrame_SolidGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 1, \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"instruction\" : \"0101000000FF00\" } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 2; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00FF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SolidInstructionsInInfiniteLoop_2ndFrame_SolidGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 0, \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"instruction\" : \"0101000000FF00\" } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 2; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00FF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SolidInstructionsInInfiniteLoop_3rdFrame_SolidRedRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 0, \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"instruction\" : \"0101000000FF00\" } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 3; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SolidInstructionsInInfiniteLoop_6thFrame_SolidGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 0, \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"instruction\" : \"0101000000FF00\" } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 6; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00FF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+				repeat (infinite):
+					ins: solid red (****)
+					ins: solid green
+
+				This test ensures that each iteration around the infinite
+				loop resets the reading of those instructions from the first
+				instruction.  We are expected solid red after performing
+				several iterations.
+				*/
+				TEST_METHOD(SolidInstructionsInInfiniteLoop_11thFrame_SolidRedRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 0, \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"instruction\" : \"0101000000FF00\" } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 11; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SolidInstructionsInInfiniteLoop_20thFrame_SolidGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 0, \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"instruction\" : \"0101000000FF00\" } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 20; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00FF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SliderNearAnimated_Frame1_RedThenGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"03010000020FF000000FF00\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 1; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("FF00000200FF0006", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SliderNearAnimated_Frame7_RedThenGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"03010000020FF000000FF00\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 7; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00FF0006FF000002", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SliderNearAnimated5RenderingFrameDuration_Frame6_RedThenGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"03050000020FF000000FF00\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 6; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00FF0001FF00000200FF0005", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SliderNearAnimated5RenderingFrameDuration_Frame11_RedThenGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"03050000020FF000000FF00\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 11; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00FF0002FF00000200FF0004", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(SliderNearAnimated5RenderingFrameDuration_Frame35_RedThenGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"03050000020FF000000FF00\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 35; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00FF0006FF000002", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(LoopInLook_Frame1_SolidRedRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\": 5, \"instructions\" : { \"instruction\" : \"01010000FF0000\",  \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\" } } } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 1; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+				repeat (1..5):
+					ins: solid red
+					repeat (1..5):
+						ins: solid green
+
+				This test ensures that nested loops function as expected.
+				*/
+				TEST_METHOD(LoopInLook_Frame2_SolidGreenRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"01010000FF0000\",  \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\" } } } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 2; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("00FF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+				repeat (1..5):
+					ins: solid red (****)
+					repeat(1..5):
+						ins: solid green
+
+				We are checking here that the loop correctly 'pops' back to the
+				the proceeding loop and expected instruction after executing
+				6 frames.  So, we expect solid red once, then five solid green
+				, and finally solid red as the result (7th frame).
+				*/
+				TEST_METHOD(LoopInLoop_Frame7_SolidRedRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"01010000FF0000\",  \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\" } } } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 7; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+				
+				repeat (1...5):
+					repeat(1...5):
+						ins: solid green
+				ins: clear (****)
+
+				This test ensures that the loop pops up twice to the final clear instruction.
+				*/
+				TEST_METHOD(LoopInLoop_Frame26_ClearRIExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 5, \"instructions\" : { \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\" } } } }, \"instruction\":\"00010000\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 26; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(LoopInLook_Frame31_FalseExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"01010000FF0000\",  \"repeat\": { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\" } } } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 31; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(false, result);
+				}
+
+				TEST_METHOD(LoopThenAnotherLoop_Frame3_SolidRedExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 1, \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"instruction\" : \"0101000000FF00\" } }, \"repeat\": { \"times\" : 1, \"instructions\" : { \"instruction\" : \"01010000FF0000\" } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 3; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+				repeat (1..2):
+					ins: solid white
+					repeat(1..2):
+						ins: solid red
+						repeat(1..5):
+							ins: solid green
+							ins: solid blue
+						ins: clear (****)
+
+				We are checking that 'popping' from the 3rd loop places the
+				execution pointer at the correct instruction within the collection
+				of new instructions.
+				*/
+				TEST_METHOD(ThreeLoopsPopTests_Frame13_ClearExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 2, \"instructions\" : { \"instruction\" : \"01010000FFFFFF\", \"repeat\" : { \"times\": 2, \"instructions\": { \"instruction\": \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\", \"instruction\": \"010100000000FF\" } }, \"instruction\": \"00010000\"  } } } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 13; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+				repeat (1..2):
+					ins: solid white (****)
+					repeat(1..2):
+						ins: solid red
+						repeat(1..5):
+							ins: solid green
+							ins: solid blue
+						ins: clear
+
+				We are checking that 'popping' happens and places the
+				execution pointer at the correct next instruction.
+				*/
+				TEST_METHOD(ThreeLoopsPopTests_Frame26_WhiteExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 2, \"instructions\" : { \"instruction\" : \"01010000FFFFFF\", \"repeat\" : { \"times\": 2, \"instructions\": { \"instruction\": \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\", \"instruction\": \"010100000000FF\" } }, \"instruction\": \"00010000\"  } } } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 26; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("FFFFFF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+				repeat (1..2):
+					ins: solid white
+					repeat(1..2):
+						ins: solid red
+						repeat(1..5):
+							ins: solid green
+							ins: solid blue
+						ins: clear (****)
+
+				We are checking that the execution pointer is placed
+				at the last instruction (clear).
+				*/
+				TEST_METHOD(ThreeLoopsPopTests_Frame50_WhiteExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 2, \"instructions\" : { \"instruction\" : \"01010000FFFFFF\", \"repeat\" : { \"times\": 2, \"instructions\": { \"instruction\": \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\", \"instruction\": \"010100000000FF\" } }, \"instruction\": \"00010000\"  } } } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 50; i++) result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+				repeat (1..2):
+					ins: solid white (****)
+					repeat(1..2):
+						ins: solid red
+						repeat(1..5):
+							ins: solid green
+							ins: solid blue
+						ins: clear
+
+				We are checking that the program ends after all executions.
+				*/
+				TEST_METHOD(ThreeLoopsPopTests_Frame51_FalseExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 2, \"instructions\" : { \"instruction\" : \"01010000FFFFFF\", \"repeat\" : { \"times\": 2, \"instructions\": { \"instruction\": \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\" : \"0101000000FF00\", \"instruction\": \"010100000000FF\" } }, \"instruction\": \"00010000\"  } } } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 51; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(false, result);
+				}
+
+				/*
+				For the following program:
+				repeat (1..2):
+					ins: solid white (****)
+					repeat(1..2):
+						ins: solid red
+						repeat(1..2):
+							ins: solid green
+
+				We are checking that 'popping' happens and moves the
+				execution pointer right back at the solid white instruction
+				of the fist loop after the 2nd lop has complete both iterations
+				for the first time.
+				*/
+				TEST_METHOD(ThreeLoopsPopTests_Frame8_WhiteExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": { \"times\" : 2, \"instructions\" : { \"instruction\" : \"01010000FFFFFF\", \"repeat\" : { \"times\": 2, \"instructions\": { \"instruction\": \"01010000FF0000\", \"repeat\" : { \"times\" : 2, \"instructions\" : { \"instruction\" : \"0101000000FF00\" } } } } } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 8; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("FFFFFF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				ins: solid red (****)
+				repeat (1..1):
+					ins: solid green
+				ins: solid blue
+				repeat
+					ins: solid white
+				ins: clear
+
+				We expect the first instruction to be returned - solid red - when frame 1 is requested.
+				*/
+				TEST_METHOD(ThreeIns2Loops_Frame1_SolidRedExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"0101000000FF00\" } }, \"instruction\" : \"010100000000FF\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"01010000FFFFFF\" } }, \"instruction\" : \"00010000\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 1; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				ins: solid red
+				repeat (1..1):
+					ins: solid green (****)
+				ins: solid blue
+				repeat
+					ins: solid white
+				ins: clear
+
+				We expect the second instruction to be returned - solid green - when frame 1 is requested.
+				This test ensures that the instruction pointer is positioned correctly when loops
+				are popped.
+				*/
+				TEST_METHOD(ThreeIns2Loops_Frame2_SolidGreenExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"0101000000FF00\" } }, \"instruction\" : \"010100000000FF\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"01010000FFFFFF\" } }, \"instruction\" : \"00010000\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 2; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("00FF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				ins: solid red
+				repeat (1..1):
+					ins: solid green 
+				ins: solid blue (****)
+				repeat
+					ins: solid white
+				ins: clear
+
+				We expect the third instruction to be returned - solid white - when frame 3 is requested.
+				This test ensures that the instruction pointer is positioned correctly when loops
+				are popped.
+				*/
+				TEST_METHOD(ThreeIns2Loops_Frame3_SolidBlueExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"0101000000FF00\" } }, \"instruction\" : \"010100000000FF\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"01010000FFFFFF\" } }, \"instruction\" : \"00010000\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 3; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("0000FF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				ins: solid red
+				repeat (1..1):
+					ins: solid green
+				ins: solid blue
+				repeat
+					ins: solid white (****)
+				ins: clear
+
+				We expect the fourth instruction to be returned - solid white - when frame 4 is requested.
+				This test ensures that the instruction pointer is positioned correctly when loops
+				are popped.
+				*/
+				TEST_METHOD(ThreeIns2Loops_Frame4_SolidWhiteExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"0101000000FF00\" } }, \"instruction\" : \"010100000000FF\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"01010000FFFFFF\" } }, \"instruction\" : \"00010000\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 4; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("FFFFFF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				ins: solid red
+				repeat (1..1):
+					ins: solid green
+				ins: solid blue
+				repeat
+					ins: solid white
+				ins: clear (****)
+
+				We expect the fifth instruction to be returned - clear - when frame 5 is requested.
+				This test ensures that the instruction pointer is positioned correctly when loops
+				are popped.
+				*/
+				TEST_METHOD(ThreeIns2Loops_Frame5_ClearExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"0101000000FF00\" } }, \"instruction\" : \"010100000000FF\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"01010000FFFFFF\" } }, \"instruction\" : \"00010000\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 5; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				ins: solid red
+				repeat (1..1):
+					ins: solid green
+				ins: solid blue
+				repeat
+					ins: solid white
+				ins: clear
+
+				We expect false to be returned when the 6th frame is requested (i.e. no further
+				instructions).  This ensures that programs finishing executing when expected.
+				*/
+				TEST_METHOD(ThreeIns2Loops_Frame6_FalseExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"0101000000FF00\" } }, \"instruction\" : \"010100000000FF\", \"repeat\" : { \"times\" : 1, \"instructions\" : { \"instruction\": \"01010000FFFFFF\" } }, \"instruction\" : \"00010000\" } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 6; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(false, result);
+				}
+
+				/*
+				For the following program:
+
+				repeat (1..5):
+					ins: solid green
+					ins: solid red
+				ins: clear (***)
+				repeat (1..5):
+					ins: solid blue
+					ins: solid white
+				ins: clear
+				repeat (1..5):
+					ins: solid (FF,FF,00)
+					ins: solid (00,FF,FF)
+
+				We are ensuring that loop popping works after the expected
+				number of iterations of that loop
+				*/
+				TEST_METHOD(ThreeLoops2Ins_Frame11_ClearExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"0101000000FF00\", \"instruction\": \"01010000FF0000\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"010100000000FF\", \"instruction\": \"01010000FFFFFF\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"01010000FFFF00\", \"instruction\": \"0101000000FFFF\"  } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 11; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat (1..5):
+					ins: solid green
+					ins: solid red
+				ins: clear 
+				repeat (1..5):
+					ins: solid blue
+					ins: solid white (****)
+				ins: clear
+				repeat (1..5):
+					ins: solid (FF,FF,00)
+					ins: solid (00,FF,FF)
+
+				We are ensuring that loop popping works after the expected
+				number of iterations of that loop
+				*/
+				TEST_METHOD(ThreeLoops2Ins_Frame15_SolidWhiteExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"0101000000FF00\", \"instruction\": \"01010000FF0000\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"010100000000FF\", \"instruction\": \"01010000FFFFFF\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"01010000FFFF00\", \"instruction\": \"0101000000FFFF\"  } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 15; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FFFFFF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat (1..5):
+					ins: solid green
+					ins: solid red
+				ins: clear
+				repeat (1..5):
+					ins: solid blue
+					ins: solid white 
+				ins: clear (****)
+				repeat (1..5):
+					ins: solid (FF,FF,00)
+					ins: solid (00,FF,FF)
+
+				We are ensuring that loop popping works and moves
+				to the expected next instruction.
+				*/
+				TEST_METHOD(ThreeLoops2Ins_Frame22_ClearExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"0101000000FF00\", \"instruction\": \"01010000FF0000\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"010100000000FF\", \"instruction\": \"01010000FFFFFF\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"01010000FFFF00\", \"instruction\": \"0101000000FFFF\"  } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 22; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat (1..5):
+					ins: solid green
+					ins: solid red
+				ins: clear
+				repeat (1..5):
+					ins: solid blue
+					ins: solid white
+				ins: clear
+				repeat (1..5):
+					ins: solid (FF,FF,00) (****)
+					ins: solid (00,FF,FF)
+
+				We are ensuring that loop popping works after the expected
+				and moves to the expected next instruction.
+				*/
+				TEST_METHOD(ThreeLoops2Ins_Frame25_FFFF00Expected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"0101000000FF00\", \"instruction\": \"01010000FF0000\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"010100000000FF\", \"instruction\": \"01010000FFFFFF\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"01010000FFFF00\", \"instruction\": \"0101000000FFFF\"  } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 25; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("FFFF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat (1..5):
+					ins: solid green
+					ins: solid red
+				ins: clear
+				repeat (1..5):
+					ins: solid blue
+					ins: solid white
+				ins: clear
+				repeat (1..5):
+					ins: solid (FF,FF,00) 
+					ins: solid (00,FF,FF) (****)
+
+				We are ensuring that loop popping works after the expected
+				and moves to the expected next instruction.
+				*/
+				TEST_METHOD(ThreeLoops2Ins_Frame28_00FFFFExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"0101000000FF00\", \"instruction\": \"01010000FF0000\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"010100000000FF\", \"instruction\": \"01010000FFFFFF\"  } }, \"instruction\" : \"00010000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"instruction\": \"01010000FFFF00\", \"instruction\": \"0101000000FFFF\"  } } } }");
+
+					// act
+					bool result;
+					for (int i = 0; i < 28; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						Logger::WriteMessage(lpeUnitTestHelper.riBuffer->GetBuffer());
+					}
+
+					// assert
+					int areEqual = strcmp("00FFFF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame1_SolidRedExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01010000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 1; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00) (each frame lasts 5 rendering frames)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame2_SolidBlueExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01050000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 2; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("0000FF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00) (each frame lasts 5 rendering frames)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame12_SolidGreenExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01050000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 12; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("00FF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00) (each frame lasts 5 rendering frames)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame13_SolidWhiteExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01050000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 13; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FFFFFF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00) (each frame lasts 5 rendering frames)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame14_SolidRedExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01050000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 14; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FF000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00) (each frame lasts 5 rendering frames)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame65_SolidWhiteExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01050000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 65; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FFFFFF01R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00) (each frame lasts 5 rendering frames)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame66_SolidFFFF00Expected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01050000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 66; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FFFF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00) (each frame lasts 5 rendering frames)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame67_SolidFFFF00Expected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01050000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 67; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FFFF0001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00) (each frame lasts 5 rendering frames)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame76_ClearExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01050000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 76; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("00000001R", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+				For the following program:
+
+				repeat(1...5):
+					ins: solid red
+					repeat(1...5):
+						repeat(1...2):
+							ins:solid blue
+					ins: solid green
+					ins: solid white
+				repeat(1....2):
+					ins: solid (FF,FF,00) (each frame lasts 5 rendering frames)
+				ins: clear
+
+				We are ensuring that complex programs execute as expected.
+				*/
+				TEST_METHOD(TwoLoopsThreeNested_Frame77_FalseExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"my program\", \"instructions\" : { \"repeat\": {	\"times\": 5, \"instructions\": { \"instruction\" : \"01010000FF0000\", \"repeat\" : { \"times\" : 5, \"instructions\" : { \"repeat\" : { \"times\" : 2,	\"instructions\" : { \"instruction\" : \"010100000000FF\" } } }	}, \"instruction\" : \"0101000000FF00\", \"instruction\" : \"01010000FFFFFF\" } }, \"repeat\" : {	\"times\" : 2, \"instructions\" : { \"instruction\" : \"01050000FFFF00\" } }, \"instruction\" : \"00010000\" }}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 77; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(false, result);
+				}
+		};
 	}
 }

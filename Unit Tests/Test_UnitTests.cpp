@@ -15,30 +15,34 @@ namespace LS
 				{
 					// arrange
 					// char json[] = "{ \"name\" : \"kevin\" }";
-					char json[] = "{ \"name\" : \"test prog\", \"instructions\" : { \"instruction\" : \"ins 1\", \"instruction\" : \"ins 2\" } }";
+					char json[] = "{ \"name\" : \"my program\", \"instructions\" : { \"instruction\":\"0101000000FF00\",  \"instruction\":\"01010000FF0000\"} }";
 					StaticJsonDocument<1000> jsonDoc;
 
 					// act
 					DeserializationError error = deserializeJson(jsonDoc, json);
 
-					// assert
-					// const char* name = jsonDoc["name"];
-					// const char* notExist = jsonDoc["notexist"];
-					const char* progName = jsonDoc["name"];
-					JsonObject instructions = jsonDoc["instructions"];
+					JsonObject ins = jsonDoc["instructions"];
+					// JsonVariant el = ins.
+					// const char * val = el.as<const char*>();
 
-					// using C++98 syntax (for older compilers):
-					for (JsonObject::iterator it = instructions.begin(); it != instructions.end(); ++it) {
-						const char* key = it->key().c_str();
-						const char* val = it->value().as<char*>();
+					//// assert
+					//// const char* name = jsonDoc["name"];
+					//// const char* notExist = jsonDoc["notexist"];
+					//const char* progName = jsonDoc["name"];
+					//JsonObject instructions = jsonDoc["instructions"];
 
-						// Logger::WriteMessage(key + " = " + val);
-						// Logger::WriteMessage(val);
-						cout << key << " = " << val;
+					//// using C++98 syntax (for older compilers):
+					//for (JsonObject::iterator it = instructions.begin(); it != instructions.end(); ++it) {
+					//	const char* key = it->key().c_str();
+					//	const char* val = it->value().as<char*>();
 
-						int x = 10;
-						// const char* val = it->value().as<char*>;
-					}
+					//	// Logger::WriteMessage(key + " = " + val);
+					//	// Logger::WriteMessage(val);
+					//	cout << key << " = " << val;
+
+					//	int x = 10;
+					//	// const char* val = it->value().as<char*>;
+					//}
 				}
 		};
 	}

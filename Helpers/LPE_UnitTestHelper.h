@@ -13,6 +13,8 @@ namespace LS {
 			LPE* lpe = nullptr;
 			LEDConfig* ledConfig = nullptr;
 			StringProcessor* stringProcessor = nullptr;
+			FixedSizeCharBuffer* riBuffer = nullptr;
+			FixedSizeCharBuffer* lpBuffer = nullptr;
 
 			LPE_UnitTestHelper(uint16_t noLeds = 8) {
 				this->noLeds = noLeds;
@@ -22,6 +24,17 @@ namespace LS {
 				this->ledConfig = new LEDConfig(this->noLeds);
 				this->stringProcessor = new StringProcessor();
 				this->lpe = new LPE(ledConfig, stringProcessor);
+				this->riBuffer = new FixedSizeCharBuffer(1000);
+
+				return this->lpe;
+			}
+
+			LPE* InstantiateLPEWithProgram(const char* lp) {
+				LPE* lpe = InstantiateLPE();
+				this->lpBuffer = new FixedSizeCharBuffer(1000);
+				this->lpBuffer->LoadFromBuffer(lp);
+				LPValidateResult result = LPValidateResult();
+				lpe->ValidateLP(this->lpBuffer, &result);
 
 				return this->lpe;
 			}
@@ -30,6 +43,8 @@ namespace LS {
 				if (ledConfig != nullptr) free(ledConfig);
 				if (stringProcessor != nullptr) free(stringProcessor);
 				if (lpe != nullptr) free(lpe);
+				if (riBuffer != nullptr) free(riBuffer);
+				if (lpBuffer != nullptr) free(lpBuffer);
 			}
 	};
 }
