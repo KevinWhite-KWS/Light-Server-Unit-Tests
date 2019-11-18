@@ -599,6 +599,57 @@ namespace LS
 					Assert::AreEqual<bool>(true, lpiInstantiator.VerifyRIBuffer("00000008", &riBuffer));
 					lpiInstantiator.CleanUp(lpi);
 				}
+
+				TEST_METHOD(NextRIReturnsExpectedRI_FadeOut_FF0000ToBlack_Step1_FF0000)
+				{
+					// arrange
+					LPI_UnitTestHelper lpiInstantiator = LPI_UnitTestHelper(LPI_Fade, "04010000321FF0000000000");
+					FadeAnimatedLPI* lpi = (FadeAnimatedLPI*)lpiInstantiator.InstantiateLPI();
+					FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(1000);
+
+					// act
+					lpi->GetNextRI(&riBuffer);
+
+					// assert
+					Assert::AreEqual<bool>(true, lpiInstantiator.VerifyRIBuffer("FF000008", &riBuffer));
+					lpiInstantiator.CleanUp(lpi);
+				}
+
+				TEST_METHOD(NextRIReturnsExpectedRI_FadeOut_FF0000ToBlack_Step2_CD0000)
+				{
+					// arrange
+					LPI_UnitTestHelper lpiInstantiator = LPI_UnitTestHelper(LPI_Fade, "04010000321FF0000000000");
+					FadeAnimatedLPI* lpi = (FadeAnimatedLPI*)lpiInstantiator.InstantiateLPI();
+					FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(1000);
+
+					// act
+					for (int i = 0; i < 2; i++) {
+						riBuffer.ClearBuffer();
+						lpi->GetNextRI(&riBuffer);
+					};
+
+					// assert
+					Assert::AreEqual<bool>(true, lpiInstantiator.VerifyRIBuffer("CD000008", &riBuffer));
+					lpiInstantiator.CleanUp(lpi);
+				}
+
+				TEST_METHOD(NextRIReturnsExpectedRI_FadeOut_FF0000ToBlack_Step3_9B0000)
+				{
+					// arrange
+					LPI_UnitTestHelper lpiInstantiator = LPI_UnitTestHelper(LPI_Fade, "04010000321FF0000000000");
+					FadeAnimatedLPI* lpi = (FadeAnimatedLPI*)lpiInstantiator.InstantiateLPI();
+					FixedSizeCharBuffer riBuffer = FixedSizeCharBuffer(1000);
+
+					// act
+					for (int i = 0; i < 3; i++) {
+						riBuffer.ClearBuffer();
+						lpi->GetNextRI(&riBuffer);
+					};
+
+					// assert
+					Assert::AreEqual<bool>(true, lpiInstantiator.VerifyRIBuffer("9B000008", &riBuffer));
+					lpiInstantiator.CleanUp(lpi);
+				}
 			};
 		}
 	}

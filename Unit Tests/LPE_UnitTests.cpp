@@ -2184,6 +2184,266 @@ namespace LS
 					lpeUnitTestHelper.CleanUp();
 					Assert::AreEqual<bool>(false, result);
 				}
+
+				/*
+				For the following program:
+
+				repeat (infinite):
+					ins: fade black to red (5 frame duration)
+					ins: fade red to black (5 frame duration)
+
+				We are ensuring that the fade in / out works as expected
+				*/
+				TEST_METHOD(InfiniteFadeInFadeOut_Frame1_000000Expected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04050000320000000FFFFFF\", \"instruction\" : \"04050000321000000FFFFFF\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 1; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("00000008", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				/*
+								For the following program:
+
+								repeat (infinite):
+									ins: fade black to red (5 frame duration)
+									ins: fade red to black (5 frame duration)
+
+								We are ensuring that the fade in / out works as expected
+								*/
+				TEST_METHOD(InfiniteFadeInFadeOut_Frame6_FFFFFFExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04050000320000000FFFFFF\", \"instruction\" : \"04050000321000000FFFFFF\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 6; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("32323208", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(InfiniteFadeInFadeOut_Frame30_FAFAFAExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04050000320000000FFFFFF\", \"instruction\" : \"04050000321000000FFFFFF\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 30; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FAFAFA08", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(InfiniteFadeInFadeOut_Frame35_FFFFFFExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04050000320000000FFFFFF\", \"instruction\" : \"04050000321000000FFFFFF\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 35; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FFFFFF08", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(InfiniteFadeInFadeOut_Frame41_CDCDCDExpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04050000320000000FFFFFF\", \"instruction\" : \"04050000321FFFFFF000000\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 41; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("CDCDCD08", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(InfiniteFadeInFadeOut_Frame51_696969xpected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04050000320000000FFFFFF\", \"instruction\" : \"04050000321FFFFFF000000\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 51; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("69696908", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(InfiniteFadeInFadeOut_Frame61_050505Expected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04050000320000000FFFFFF\", \"instruction\" : \"04050000321FFFFFF000000\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 61; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("05050508", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(InfiniteFadeInFadeOut_Frame66_000000Expected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04050000320000000FFFFFF\", \"instruction\" : \"04050000321FFFFFF000000\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 66; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("00000008", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(InfiniteFadeInFadeOut_Frame81_646464Expected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04050000320000000FFFFFF\", \"instruction\" : \"04050000321FFFFFF000000\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 81; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("64646408", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(InfiniteFadeOut_Frame1_FF0000Expected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04010000321FF0000000000\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 1; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("FF000008", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
+
+				TEST_METHOD(InfiniteFadeOut_Frame2_CD0000Expected)
+				{
+					// arrange
+					LPE_UnitTestHelper lpeUnitTestHelper = LPE_UnitTestHelper();
+					LPE* lpe = lpeUnitTestHelper.InstantiateLPEWithProgram("{ \"name\" : \"fade test\", \"instructions\" : { \"repeat\" : { \"times\": 0, \"instructions\" : { \"instruction\" : \"04010000321FF0000000000\" } }}}");
+
+					// act
+					bool result;
+					for (int i = 0; i < 2; i++) {
+						result = lpe->GetNextRI(lpeUnitTestHelper.riBuffer);
+						std::stringstream ss;
+						ss << i << ":" << lpeUnitTestHelper.riBuffer->GetBuffer();
+						Logger::WriteMessage(ss.str().c_str());
+					}
+
+					// assert
+					int areEqual = strcmp("CD000008", lpeUnitTestHelper.riBuffer->GetBuffer());
+					lpeUnitTestHelper.CleanUp();
+					Assert::AreEqual<bool>(true, result);
+					Assert::AreEqual<int>(0, areEqual);
+				}
 		};
 	}
 }
