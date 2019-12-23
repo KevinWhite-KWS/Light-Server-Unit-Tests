@@ -93,6 +93,12 @@
     <ClCompile Include="Unit Tests\Test_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Unit Tests\LightWebServer_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light Server\src\LightWebServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -123,6 +129,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Helpers\LPE_UnitTestHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mocks\Mock_WebServer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

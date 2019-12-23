@@ -161,6 +161,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Light Server\src\FixedSizeCharBuffer.cpp" />
+    <ClCompile Include="..\Light Server\src\LightWebServer.cpp" />
     <ClCompile Include="..\Light Server\src\LPE.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\BlocksNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\LPI\ClearNonAnimatedLPI.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="..\Light Server\src\LPI\StochasticNonAnimatedLPI.cpp" />
     <ClCompile Include="..\Light Server\src\Renderer.cpp" />
     <ClCompile Include="..\Light Server\src\StringProcessor.cpp" />
+    <ClCompile Include="Unit Tests\LightWebServer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\BlocksNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="pch.cpp" />
@@ -204,6 +206,7 @@
     <ClInclude Include="mocks\Mock_Adafruit_NeoPixel.h" />
     <ClInclude Include="mocks\Mock_LPE.h" />
     <ClInclude Include="mocks\Mock_Renderer.h" />
+    <ClInclude Include="mocks\Mock_WebServer.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

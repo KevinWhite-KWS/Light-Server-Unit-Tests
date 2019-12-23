@@ -55,6 +55,9 @@ namespace LS {
 
 				return pixelColour;
 			}
+
+			void fill(uint32_t c = 0, uint16_t first = 0, uint16_t count = 0) {
+			}
 	};
 }
 #endif
