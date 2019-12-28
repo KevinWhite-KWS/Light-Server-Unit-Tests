@@ -53,10 +53,15 @@ namespace LS {
 					pixelColour = pixelColour | colours[n].blue << 8;
 				}
 
+
 				return pixelColour;
 			}
 
 			void fill(uint32_t c = 0, uint16_t first = 0, uint16_t count = 0) {
+			}
+
+			uint16_t numPixels(void) const {
+				return 0;
 			}
 	};
 }

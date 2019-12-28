@@ -193,6 +193,37 @@ namespace LS
 					int areEqual = strcmp("FF0000", loadingBuffer.GetBuffer());
 					Assert::AreEqual(0, areEqual);
 				}
+
+				TEST_METHOD(HandleNextCommand_CheckPowerCommandReceived_CheckPowerCommandSet)
+				{
+					// arrange
+					Mock_WebServer mockws = Mock_WebServer();
+					mockws.doInvalidCommand = true;
+					FixedSizeCharBuffer loadingBuffer = FixedSizeCharBuffer(10000);
+					// LightWebServer lws = LightWebServer((IWebServer*)&mockws, &loadingBuffer);
+					Mock_LightWebServer lws = Mock_LightWebServer((IWebServer*)&mockws, &loadingBuffer);
+
+					// act
+					CommandType cmdType = lws.HandleNextCommand();
+
+					// assert
+					Assert::AreEqual((int)CommandType::INVALID, (int)cmdType);
+				}
+
+				TEST_METHOD(HandleNextCommand_GetAboutCommandReceived_GetAboutCommandSet)
+				{
+					// arrange
+					Mock_WebServer mockws = Mock_WebServer();
+					mockws.doGetAbout = true;
+					FixedSizeCharBuffer loadingBuffer = FixedSizeCharBuffer(10000);
+					Mock_LightWebServer lws = Mock_LightWebServer((IWebServer*)&mockws, &loadingBuffer);
+
+					// act
+					CommandType cmdType = lws.HandleNextCommand();
+
+					// assert
+					Assert::AreEqual((int)CommandType::GETABOUT, (int)cmdType);
+				}
 		};
 
 		TEST_CLASS(RespondOK) {

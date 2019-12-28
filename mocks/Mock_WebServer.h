@@ -27,6 +27,14 @@ namespace LS {
 			static void HandleCommandPowerOn(ILightWebServer* lightWebServer, IWebServer& server, IWebServer::ConnectionType type, char* head, bool tailComplete) {
 				LightWebServer::HandleCommandPowerOn(lightWebServer, server, type, head, tailComplete);
 			}
+
+			static void HandleCheckPower(ILightWebServer* lightWebServer, IWebServer& server, IWebServer::ConnectionType type, char* head, bool tailComplete) {
+				LightWebServer::HandleCommandCheckPower(lightWebServer, server, type, head, tailComplete);
+			}
+
+			static void HandleGetAbout(ILightWebServer* lightWebServer, IWebServer& server, IWebServer::ConnectionType type, char* head, bool tailComplete) {
+				LightWebServer::HandleCommandGetAbout(lightWebServer, server, type, head, tailComplete);
+			}
 	};
 
 
@@ -47,6 +55,8 @@ namespace LS {
 			bool doLoadProgramCommand = false;
 			bool doPowerOffCommand = false;
 			bool doPowerOnCommand = false;
+			bool doCheckPowerCommand = false;
+			bool doGetAbout = false;
 
 			Mock_WebServer() {
 			}
@@ -97,12 +107,22 @@ namespace LS {
 				else if (doPowerOnCommand) {
 					Mock_LightWebServer::HandleCommandPowerOn(lws, *this, ConnectionType::GET, nullptr, false);
 				}
+				else if (doCheckPowerCommand) {
+					Mock_LightWebServer::HandleCheckPower(lws, *this, ConnectionType::GET, nullptr, false);
+				}
+				else if (doGetAbout) {
+					Mock_LightWebServer::HandleGetAbout(lws, *this, ConnectionType::GET, nullptr, false);
+				}
 			}
 			void setLightWebServer(ILightWebServer* lightWebServer) {
 				lws = lightWebServer;
 			}
 			void closeConnection() {
 				connectionClosedCalled = true;
+			}
+
+			void printP(const char* str) {
+
 			}
 	};
 }
