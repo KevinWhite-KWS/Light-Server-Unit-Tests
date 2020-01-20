@@ -7,8 +7,8 @@
 namespace LS {
 	class Mock_LightWebServer : public LightWebServer {
 		public :
-			Mock_LightWebServer(IWebServer* webServer, FixedSizeCharBuffer* loadingBuffer) 
-				: LightWebServer(webServer, loadingBuffer) {
+			Mock_LightWebServer(IWebServer* webServer, FixedSizeCharBuffer* loadingBuffer, char* basicAuthCredentials = nullptr) 
+				: LightWebServer(webServer, loadingBuffer, basicAuthCredentials) {
 
 			}
 
@@ -35,6 +35,14 @@ namespace LS {
 			static void HandleGetAbout(ILightWebServer* lightWebServer, IWebServer& server, IWebServer::ConnectionType type, char* head, bool tailComplete) {
 				LightWebServer::HandleCommandGetAbout(lightWebServer, server, type, head, tailComplete);
 			}
+
+			static bool CheckAuth(ILightWebServer* lightWebServer, IWebServer& server) {
+				return LightWebServer::CheckAuth(lightWebServer, server);
+			}
+
+			static void HandleCommandSetLeds(ILightWebServer* lightWebServer, IWebServer& server, IWebServer::ConnectionType type, char* head, bool tailComplete) {
+				LightWebServer::HandleCommandSetLeds(lightWebServer, server, type, head, tailComplete);
+			}
 	};
 
 
@@ -49,6 +57,7 @@ namespace LS {
 			bool httpSuccessCalled = false;
 			bool httpFailCalled = false;
 			bool httpNoContentCalled = false;
+			bool httpUnauthorizedCalled = false;
 			bool connectionClosedCalled = false;
 
 			bool doInvalidCommand = false;
@@ -57,6 +66,11 @@ namespace LS {
 			bool doPowerOnCommand = false;
 			bool doCheckPowerCommand = false;
 			bool doGetAbout = false;
+			bool doSetLeds = false;
+
+			char* usernamePassword = nullptr;
+
+			ConnectionType connType = ConnectionType::GET;
 
 			Mock_WebServer() {
 			}
@@ -84,6 +98,10 @@ namespace LS {
 				httpNoContentCalled = true;
 			}
 
+			void httpUnauthorized() {
+				httpUnauthorizedCalled = true;
+			}
+
 			int read() {
 				if (serverReadBuffer == nullptr || *serverReadBuffer == 0)
 					return -1;
@@ -96,22 +114,25 @@ namespace LS {
 			}
 			void processConnection(char* buff, int* bufflen) {
 				if (doInvalidCommand) {
-					Mock_LightWebServer::HandleCommandInvalid(lws, *this, ConnectionType::GET, nullptr, false);
+					Mock_LightWebServer::HandleCommandInvalid(lws, *this, connType, nullptr, false);
 				}
 				else if (doPowerOffCommand) {
-					Mock_LightWebServer::HandleCommandPowerOff(lws, *this, ConnectionType::GET, nullptr, false);
+					Mock_LightWebServer::HandleCommandPowerOff(lws, *this, connType, nullptr, false);
 				}
 				else if (doLoadProgramCommand) {
-					Mock_LightWebServer::HandleCommandLoadProgram(lws, *this, ConnectionType::GET, nullptr, false);
+					Mock_LightWebServer::HandleCommandLoadProgram(lws, *this, connType, nullptr, false);
 				}
 				else if (doPowerOnCommand) {
-					Mock_LightWebServer::HandleCommandPowerOn(lws, *this, ConnectionType::GET, nullptr, false);
+					Mock_LightWebServer::HandleCommandPowerOn(lws, *this, connType, nullptr, false);
 				}
 				else if (doCheckPowerCommand) {
-					Mock_LightWebServer::HandleCheckPower(lws, *this, ConnectionType::GET, nullptr, false);
+					Mock_LightWebServer::HandleCheckPower(lws, *this, connType, nullptr, false);
 				}
 				else if (doGetAbout) {
-					Mock_LightWebServer::HandleGetAbout(lws, *this, ConnectionType::GET, nullptr, false);
+					Mock_LightWebServer::HandleGetAbout(lws, *this, connType, nullptr, false);
+				}
+				else if (doSetLeds) {
+					Mock_LightWebServer::HandleCommandSetLeds(lws, *this, connType, nullptr, false);
 				}
 			}
 			void setLightWebServer(ILightWebServer* lightWebServer) {
@@ -123,6 +144,10 @@ namespace LS {
 
 			void printP(const char* str) {
 
+			}
+
+			bool checkCredentials(const char authCredentials[45]) {
+				return strcmp(authCredentials, usernamePassword) == 0;
 			}
 	};
 }
