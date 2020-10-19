@@ -1,8 +1,8 @@
 #include "CppUnitTest.h"
-#include "../../../Light Server/src/LPI/BlocksNonAnimatedLPI.h"
+#include "../../../Light-Server/src/LPI/BlocksNonAnimatedLPI.h"
 
 #include "../../Helpers/LPI_UnitTestHelper.h"
-#include "../../../Light Server/src/LPE.h"
+#include "../../../Light-Server/src/LPE.h"
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 #define VALID_LPI_INS		"0601000003212221FF000000FF000000FF"

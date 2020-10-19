@@ -1,8 +1,8 @@
 #include "../pch.h"
 #include "CppUnitTest.h"
-#include "../../Light Server/src/Renderer.h"
-#include "../../Light Server/src/ValueDomainTypes.h"
-#include "../../Light Server/src/DomainInterfaces.h"
+#include "../../Light-Server/src/Renderer.h"
+#include "../../Light-Server/src/ValueDomainTypes.h"
+#include "../../Light-Server/src/DomainInterfaces.h"
 #include "../mocks/Mock_Adafruit_NeoPixel.h"
 #include "../mocks/Mock_Renderer.h"
 

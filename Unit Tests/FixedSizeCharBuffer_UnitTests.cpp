@@ -1,5 +1,5 @@
 #include "CppUnitTest.h"
-#include "../../Light Server/src/FixedSizeCharBuffer.h"
+#include "../../Light-Server/src/FixedSizeCharBuffer.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

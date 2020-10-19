@@ -1,5 +1,5 @@
 #include "CppUnitTest.h"
-#include "..\..\Light Server\src\LPE.h"
+#include "..\..\Light-Server\src\LPE.h"
 #include "..\mocks\Mock_LPE.h"
 #include "..\Helpers\LPE_UnitTestHelper.h"
 

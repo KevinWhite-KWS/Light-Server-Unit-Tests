@@ -1,9 +1,9 @@
 #include "CppUnitTest.h"
 #include <iostream>
 
-#include "../../Light Server/src/LightWebServer.h"
+#include "../../Light-Server/src/LightWebServer.h"
 #include "../mocks/Mock_WebServer.h"
-#include "../../Light Server/src/DomainInterfaces.h"
+#include "../../Light-Server/src/DomainInterfaces.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;

@@ -1,7 +1,7 @@
 #include "CppUnitTest.h"
 #include <iostream>
 
-#include "../../Light Server/src/ArduinoJson-v6.12.0.h"
+#include "../../Light-Server/src/ArduinoJson-v6.12.0.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;

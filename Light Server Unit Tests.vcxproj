@@ -160,20 +160,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Light Server\src\FixedSizeCharBuffer.cpp" />
-    <ClCompile Include="..\Light Server\src\LightWebServer.cpp" />
-    <ClCompile Include="..\Light Server\src\LPE.cpp" />
-    <ClCompile Include="..\Light Server\src\LPI\BlocksNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light Server\src\LPI\ClearNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light Server\src\LPI\FadeAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light Server\src\LPI\LPI.cpp" />
-    <ClCompile Include="..\Light Server\src\LPI\NonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light Server\src\LPI\PatternNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light Server\src\LPI\SliderAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light Server\src\LPI\SolidNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light Server\src\LPI\StochasticNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light Server\src\Renderer.cpp" />
-    <ClCompile Include="..\Light Server\src\StringProcessor.cpp" />
+    <ClCompile Include="..\Light-Server\src\FixedSizeCharBuffer.cpp" />
+    <ClCompile Include="..\Light-Server\src\LightWebServer.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPI\BlocksNonAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPI\ClearNonAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPI\FadeAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPI\LPI.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPI\NonAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPI\PatternNonAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPI\SliderAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPI\SolidNonAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPI\StochasticNonAnimatedLPI.cpp" />
+    <ClCompile Include="..\Light-Server\src\Renderer.cpp" />
+    <ClCompile Include="..\Light-Server\src\StringProcessor.cpp" />
     <ClCompile Include="Unit Tests\LightWebServer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\BlocksNoneAnimatedLPI_UnitTests.cpp" />
@@ -185,6 +185,9 @@
     <ClCompile Include="Unit Tests\LPI\SliderAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\SolidNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPI\StochasticNoneAnimatedLPI_UnitTests.cpp" />
+    <ClCompile Include="Functional Tests\Programs\LPE_ClearBeforeLoop_FunctironalTests.cpp" />
+    <ClCompile Include="Unit Tests\Programs\LPE_OneLoopMultipleInstructions_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Programs\LPE_TwoLoops_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Renderer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\StringProcessor_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Test_UnitTests.cpp" />
@@ -197,10 +200,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Light Server\src\DomainInterfaces.h" />
-    <ClInclude Include="..\Light Server\src\Renderer.h" />
-    <ClInclude Include="..\Light Server\src\StringProcessor.h" />
-    <ClInclude Include="..\Light Server\src\ValueDomainTypes.h" />
+    <ClInclude Include="..\Light-Server\src\DomainInterfaces.h" />
+    <ClInclude Include="..\Light-Server\src\Renderer.h" />
+    <ClInclude Include="..\Light-Server\src\StringProcessor.h" />
+    <ClInclude Include="..\Light-Server\src\ValueDomainTypes.h" />
+    <ClInclude Include="Functional Tests\Programs\LPE_ClearBeforeLoop_FunctionalTests.h" />
     <ClInclude Include="Helpers\LPE_UnitTestHelper.h" />
     <ClInclude Include="Helpers\LPI_UnitTestHelper.h" />
     <ClInclude Include="mocks\Mock_Adafruit_NeoPixel.h" />

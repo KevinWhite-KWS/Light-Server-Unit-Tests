@@ -2,7 +2,7 @@
 #define _MOCK_WEBSERVER_h_
 
 #include <stdint.h>
-#include "..\..\Light Server\src\DomainInterfaces.h"
+#include "..\..\Light-Server\src\DomainInterfaces.h"
 
 namespace LS {
 	class Mock_LightWebServer : public LightWebServer {

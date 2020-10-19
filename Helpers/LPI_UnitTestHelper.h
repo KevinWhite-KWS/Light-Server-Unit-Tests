@@ -13,14 +13,14 @@
 
 #pragma once
 
-#include "../../Light Server/src/LPI/LPI.h"
-#include "../../Light Server/src/LPI/ClearNonAnimatedLPI.h"
-#include "../../Light Server/src/LPI/SolidNonAnimatedLPI.h"
-#include "../../Light Server/src/LPI/PatternNonAnimatedLPI.h"
-#include "../../Light Server/src/LPI/SliderAnimatedLPI.h"
-#include "../../Light Server/src/LPI/FadeAnimatedLPI.h"
-#include "../../Light Server/src/LPI/StochasticNonAnimatedLPI.h"
-#include "../../Light Server/src/LPI/BlocksNonAnimatedLPI.h"
+#include "../../Light-Server/src/LPI/LPI.h"
+#include "../../Light-Server/src/LPI/ClearNonAnimatedLPI.h"
+#include "../../Light-Server/src/LPI/SolidNonAnimatedLPI.h"
+#include "../../Light-Server/src/LPI/PatternNonAnimatedLPI.h"
+#include "../../Light-Server/src/LPI/SliderAnimatedLPI.h"
+#include "../../Light-Server/src/LPI/FadeAnimatedLPI.h"
+#include "../../Light-Server/src/LPI/StochasticNonAnimatedLPI.h"
+#include "../../Light-Server/src/LPI/BlocksNonAnimatedLPI.h"
 
 namespace LS {
 	class LPI_UnitTestHelper {

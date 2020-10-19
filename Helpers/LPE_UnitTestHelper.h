@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../Light Server/src/LPE.h"
-#include "../../Light Server/src/ValueDomainTypes.h"
+#include "../../Light-Server/src/LPE.h"
+#include "../../Light-Server/src/ValueDomainTypes.h"
 
 namespace LS {
 	class LPE_UnitTestHelper {

@@ -2,7 +2,7 @@
 #define _MOCK_RENDERER_h_
 
 #include <stdint.h>
-#include "..\..\Light Server\src\renderer.h"
+#include "..\..\Light-Server\src\renderer.h"
 
 namespace LS {
 	class Mock_Renderer : public Renderer {

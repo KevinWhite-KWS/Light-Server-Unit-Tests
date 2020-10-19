@@ -1,8 +1,8 @@
 #include "CppUnitTest.h"
-#include "../../../Light Server/src/LPI/ClearNonAnimatedLPI.h"
+#include "../../../Light-Server/src/LPI/ClearNonAnimatedLPI.h"
 
 #include "../../Helpers/LPI_UnitTestHelper.h"
-#include "../../../Light Server/src/LPE.h"
+#include "../../../Light-Server/src/LPE.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 

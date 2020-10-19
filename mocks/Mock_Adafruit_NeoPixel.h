@@ -2,8 +2,8 @@
 #define _MOCK_ADAFRUIT_NEOPIXEL_
 
 #include <stdint.h>
-#include "..\..\Light Server\src\DomainInterfaces.h"
-#include "..\..\Light Server\src\ValueDomainTypes.h"
+#include "..\..\Light-Server\src\DomainInterfaces.h"
+#include "..\..\Light-Server\src\ValueDomainTypes.h"
 
 namespace LS {
 	class Mock_Adafruit_NeoPixel : public IPixelController {

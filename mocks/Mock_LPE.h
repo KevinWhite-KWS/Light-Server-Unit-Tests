@@ -2,8 +2,8 @@
 #define _MOCK_RENDERER_h_
 
 #include <stdint.h>
-#include "..\..\Light Server\src\lpe.h"
-#include "..\..\Light Server\src\LPI\LPI.h"
+#include "..\..\Light-Server\src\lpe.h"
+#include "..\..\Light-Server\src\LPI\LPI.h"
 
 namespace LS {
 	class Mock_LPE : public LPE {

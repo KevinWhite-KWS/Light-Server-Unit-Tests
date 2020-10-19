@@ -1,7 +1,7 @@
 // #include "pch.h"
 #include "CppUnitTest.h"
 // #include "../Light Server/src/ValueDomainTypes.h"
-#include "../../Light Server/src/StringProcessor.h"
+#include "../../Light-Server/src/StringProcessor.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
