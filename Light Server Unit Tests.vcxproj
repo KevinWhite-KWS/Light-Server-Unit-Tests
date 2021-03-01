@@ -46,7 +46,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>false</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
@@ -160,37 +160,86 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Light-Server\src\Commands\CheckPowerCommand.cpp" />
+    <ClCompile Include="..\Light-Server\src\Commands\CommandFactory.cpp" />
+    <ClCompile Include="..\Light-Server\src\Commands\GetAboutCommand.cpp" />
+    <ClCompile Include="..\Light-Server\src\Commands\InvalidCommand.cpp" />
+    <ClCompile Include="..\Light-Server\src\Commands\LoadProgramCommand.cpp" />
+    <ClCompile Include="..\Light-Server\src\Commands\NoAuthCommand.cpp" />
+    <ClCompile Include="..\Light-Server\src\Commands\PowerOffCommand.cpp" />
+    <ClCompile Include="..\Light-Server\src\Commands\PowerOnCommand.cpp" />
+    <ClCompile Include="..\Light-Server\src\Commands\SetLedsCommand.cpp" />
     <ClCompile Include="..\Light-Server\src\FixedSizeCharBuffer.cpp" />
     <ClCompile Include="..\Light-Server\src\LightWebServer.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPE.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPI\BlocksNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPI\ClearNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPI\FadeAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPI\LPI.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPI\NonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPI\PatternNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPI\SliderAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPI\SolidNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light-Server\src\LPI\StochasticNonAnimatedLPI.cpp" />
-    <ClCompile Include="..\Light-Server\src\Renderer.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\Executor\LpExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\Instructions\Instruction.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\Instructions\InstructionWithChild.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\Instructions\LpInstruction.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\Instructions\RepeatInstruction.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\AnimatedLpiExecutors\FadeAnimatedLpiExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\LpiExecutorFactory.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\LpiExecutorOutput.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\LpiExecutorParams.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\BlocksNonAnimatedLpiExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\ClearNonAnimatedLpiExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\NonAnimatedLpiExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\PatternNonAnimatedLpiExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\SolidNonAnimatedLpiExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\StochasticNonAnimatedLpiExecutor.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\JsonInstructionBuilderFactory.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\LpJsonInstructionBuilder.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\LpJsonState.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\LpJsonStateBuilder.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\LpState.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\RepeatJsonInstructionBuilder.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\Validation\JsonInstructionValidatorFactory.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\Validation\LpiJsonInstructionValidator.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\Validation\LpJsonValidator.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\Validation\RepeatJsonInstructionValidator.cpp" />
+    <ClCompile Include="..\Light-Server\src\Orchastrator\LightServerOrchastrator.cpp" />
+    <ClCompile Include="..\Light-Server\src\Orchastrator\Timer.cpp" />
+    <ClCompile Include="..\Light-Server\src\Renderer\PixelRenderer.cpp" />
     <ClCompile Include="..\Light-Server\src\StringProcessor.cpp" />
+    <ClCompile Include="mocks\Mock_Orchastrator.h" />
+    <ClCompile Include="Unit Tests\Commands\CheckPowerCommand_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Commands\CommandFactory_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Commands\GetAboutCommand_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Commands\InvalidCommand_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Commands\LoadProgramCommand_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Commands\NoAuthCommand_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Commands\PowerOffCommand_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Commands\PowerOnCommand_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LightWebServer_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPE_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\BlocksNoneAnimatedLPI_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\Executor\LpExecutor_FunctionalTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\FadeAnimatedLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor\RainbowAnimatedLpiExecutor_3Colours60Steps10LengthStartFar_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor\RainbowAnimatedLpiExecutor_3Colours60Steps10Length_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\LpiExecutorFactory_Tests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\BlocksNonAnimatedLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\ClearNonAnimatedLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\PatternNonAnimatedLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\SolidNonAnimateLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\StochasticNonAnimatedLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\JsonInstructionBuilderFactory_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\LpJsonStateBuilder_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\LpJsonState_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\LpJsonInstructionBuilder_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\RepeatJsonInstructionBuilder_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\Validation\JsonInstructionValidatorFactory_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\Validation\LpiJsonInstructionValidator_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\Validation\LpJsonValidator_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\Validation\RepeatJsonInstructionValidator_UnitTests.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Unit Tests\FixedSizeCharBuffer_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\ClearNoneAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\FadeAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\PatternNoneAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\SliderAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\SolidNoneAnimatedLPI_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\LPI\StochasticNoneAnimatedLPI_UnitTests.cpp" />
     <ClCompile Include="Functional Tests\Programs\LPE_ClearBeforeLoop_FunctironalTests.cpp" />
-    <ClCompile Include="Unit Tests\Programs\LPE_OneLoopMultipleInstructions_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\Programs\LPE_TwoLoops_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\Renderer_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Orchastrator\LightServerOrchastrator_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Orchastrator\Timer_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Renderer\PixelRenderer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\StringProcessor_UnitTests.cpp" />
-    <ClCompile Include="Unit Tests\Test_UnitTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Light Server\Light Server.vcxproj">
@@ -201,7 +250,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Light-Server\src\DomainInterfaces.h" />
-    <ClInclude Include="..\Light-Server\src\Renderer.h" />
     <ClInclude Include="..\Light-Server\src\StringProcessor.h" />
     <ClInclude Include="..\Light-Server\src\ValueDomainTypes.h" />
     <ClInclude Include="Functional Tests\Programs\LPE_ClearBeforeLoop_FunctionalTests.h" />
@@ -209,9 +257,12 @@
     <ClInclude Include="Helpers\LPI_UnitTestHelper.h" />
     <ClInclude Include="mocks\Mock_Adafruit_NeoPixel.h" />
     <ClInclude Include="mocks\Mock_LPE.h" />
-    <ClInclude Include="mocks\Mock_Renderer.h" />
     <ClInclude Include="mocks\Mock_WebServer.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Unit Tests\LPE\Executor\LpExecutor_Tester.h" />
+    <ClInclude Include="Unit Tests\LPE\LpiExecutors\LpiExecutor_Tester.h" />
+    <ClInclude Include="Unit Tests\LPE\StateBuilder\LpJsonState_TestHelper.h" />
+    <ClInclude Include="Unit Tests\LPE\Validation\JsonructionValidatorTestingHelper.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "..\..\Light-Server\src\DomainInterfaces.h"
+#include "..\..\Light-Server\src\LightWebServer.h"
 
 namespace LS {
 	class Mock_LightWebServer : public LightWebServer {

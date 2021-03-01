@@ -21,6 +21,7 @@
 #include "../../Light-Server/src/LPI/FadeAnimatedLPI.h"
 #include "../../Light-Server/src/LPI/StochasticNonAnimatedLPI.h"
 #include "../../Light-Server/src/LPI/BlocksNonAnimatedLPI.h"
+#include "../../Light-Server/src/LPI/RainbowAnimatedLPI.h"
 
 namespace LS {
 	class LPI_UnitTestHelper {
@@ -89,6 +90,9 @@ namespace LS {
 						break;
 					case 6:
 						lpi = new BlocksNonAnimatedLPI(ledConfig, stringProcessor);
+						break;
+					case 7:
+						lpi = new RainbowAnimatedLPI(ledConfig, stringProcessor);
 						break;
 				}
 

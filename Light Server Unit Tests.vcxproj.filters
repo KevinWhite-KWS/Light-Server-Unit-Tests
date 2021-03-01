@@ -21,49 +21,10 @@
     <ClCompile Include="Unit Tests\FixedSizeCharBuffer_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Unit Tests\Renderer_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Unit Tests\StringProcessor_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\BlocksNoneAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\LPE_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\ClearNoneAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\SolidNoneAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\PatternNoneAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\StochasticNoneAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\SliderAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\LPI\FadeAnimatedLPI_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\Test_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Unit Tests\LightWebServer_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPI\BlocksNonAnimatedLPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPI\ClearNonAnimatedLPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPI\FadeAnimatedLPI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Light-Server\src\FixedSizeCharBuffer.cpp">
@@ -72,40 +33,226 @@
     <ClCompile Include="..\Light-Server\src\LightWebServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPE.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPI\NonAnimatedLPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPI\PatternNonAnimatedLPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPI\LPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPI\SliderAnimatedLPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPI\SolidNonAnimatedLPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Light-Server\src\LPI\StochasticNonAnimatedLPI.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Light-Server\src\StringProcessor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Unit Tests\Programs\LPE_TwoLoops_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Unit Tests\Programs\LPE_OneLoopMultipleInstructions_UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Functional Tests\Programs\LPE_ClearBeforeLoop_FunctironalTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\Validation\LpiJsonInstructionValidator_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\Validation\LpiJsonInstructionValidator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\Validation\RepeatJsonInstructionValidator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\Validation\RepeatJsonInstructionValidator_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\Validation\JsonInstructionValidatorFactory_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\Validation\JsonInstructionValidatorFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\Validation\LpJsonValidator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\Validation\LpJsonValidator_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\LpJsonState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\LpState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\Instructions\Instruction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\Instructions\InstructionWithChild.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\Instructions\LpInstruction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\Instructions\RepeatInstruction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\JsonInstructionBuilderFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\LpJsonInstructionBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\RepeatJsonInstructionBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\JsonInstructionBuilderFactory_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\LpJsonInstructionBuilder_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\RepeatJsonInstructionBuilder_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\StateBuilder\LpJsonStateBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\LpJsonState_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\StateBuilder\LpJsonStateBuilder_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\Executor\LpExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\Executor\LpExecutor_FunctionalTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\LpiExecutorParams.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\ClearNonAnimatedLpiExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\SolidNonAnimatedLpiExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\NonAnimatedLpiExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\LpiExecutorOutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\ClearNonAnimatedLpiExecutor_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\SolidNonAnimateLpiExecutor_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\PatternNonAnimatedLpiExecutor_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\PatternNonAnimatedLpiExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\FadeAnimatedLpiExecutor_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\AnimatedLpiExecutors\FadeAnimatedLpiExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\StochasticNonAnimatedLpiExecutor_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\StochasticNonAnimatedLpiExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\BlocksNonAnimatedLpiExecutor_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\NonAnimatedLpiExecutors\BlocksNonAnimatedLpiExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor\RainbowAnimatedLpiExecutor_3Colours60Steps10Length_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor\RainbowAnimatedLpiExecutor_3Colours60Steps10LengthStartFar_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\LpiExecutorFactory_Tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\LpiExecutors\LpiExecutorFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Renderer\PixelRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Renderer\PixelRenderer_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Commands\InvalidCommand_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Commands\InvalidCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Commands\NoAuthCommand_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Commands\NoAuthCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Commands\PowerOffCommand_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Commands\PowerOffCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mocks\Mock_Orchastrator.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Commands\PowerOnCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Commands\PowerOnCommand_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Commands\CheckPowerCommand_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Commands\CheckPowerCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Commands\GetAboutCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Commands\GetAboutCommand_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Commands\LoadProgramCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Commands\LoadProgramCommand_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Commands\CommandFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Commands\CommandFactory_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Commands\SetLedsCommand.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Orchastrator\Timer_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Orchastrator\Timer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Orchastrator\LightServerOrchastrator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\Orchastrator\LightServerOrchastrator_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -114,9 +261,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mocks\Mock_Adafruit_NeoPixel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="mocks\Mock_Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mocks\Mock_LPE.h">
@@ -137,13 +281,22 @@
     <ClInclude Include="..\Light-Server\src\ValueDomainTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Light-Server\src\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Light-Server\src\DomainInterfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Functional Tests\Programs\LPE_ClearBeforeLoop_FunctionalTests.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit Tests\LPE\Validation\JsonructionValidatorTestingHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit Tests\LPE\StateBuilder\LpJsonState_TestHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit Tests\LPE\Executor\LpExecutor_Tester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Unit Tests\LPE\LpiExecutors\LpiExecutor_Tester.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -8,7 +8,7 @@
 namespace LS {
 	class Mock_Adafruit_NeoPixel : public IPixelController {
 		private:
-			Colour colours[5];
+			Colour colours[8];
 			uint8_t numberOfLeds;
 
 		public:
