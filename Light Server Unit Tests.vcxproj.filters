@@ -255,6 +255,33 @@
     <ClCompile Include="Unit Tests\Orchastrator\LightServerOrchastrator_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_Head50PercentRedBlue_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\LPE\EffectHelpers\GradientEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_Tail50PercentRedBlue_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_HeadTail50PercentRedBlue_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_HeadTail50PercentComplex1_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_HeadTail50PercentComplex2_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_VariableHeadTailRedBlue_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_VariableNumberLeds50PercentHeadTailRedBlue_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\Effects\GradientEffect_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

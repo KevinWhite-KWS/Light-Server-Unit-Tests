@@ -665,7 +665,7 @@ namespace LS {
 "{\
 	\"name\" : \"testing\",\
 	\"instructions\" : [\
-		\"03010000020FF000000FF00\"\
+		\"030100000200000FF000000FF00\"\
 	]\
 }";
 
@@ -697,7 +697,7 @@ namespace LS {
 "{\
 	\"name\" : \"testing\",\
 	\"instructions\" : [\
-		\"03010000021FF000000FF00\"\
+		\"030100000210000FF000000FF00\"\
 	]\
 }";
 
@@ -736,7 +736,7 @@ namespace LS {
 "{\
 	\"name\" : \"testing\",\
 	\"instructions\" : [\
-		\"03020000020FF000000FF00\"\
+		\"030200000200000FF000000FF00\"\
 	]\
 }";
 

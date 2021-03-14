@@ -171,6 +171,7 @@
     <ClCompile Include="..\Light-Server\src\Commands\SetLedsCommand.cpp" />
     <ClCompile Include="..\Light-Server\src\FixedSizeCharBuffer.cpp" />
     <ClCompile Include="..\Light-Server\src\LightWebServer.cpp" />
+    <ClCompile Include="..\Light-Server\src\LPE\EffectHelpers\GradientEffect.cpp" />
     <ClCompile Include="..\Light-Server\src\LPE\Executor\LpExecutor.cpp" />
     <ClCompile Include="..\Light-Server\src\LPE\Instructions\Instruction.cpp" />
     <ClCompile Include="..\Light-Server\src\LPE\Instructions\InstructionWithChild.cpp" />
@@ -212,11 +213,19 @@
     <ClCompile Include="Unit Tests\Commands\PowerOffCommand_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Commands\PowerOnCommand_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LightWebServer_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\Effects\GradientEffect_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\Executor\LpExecutor_FunctionalTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\FadeAnimatedLpiExecutor_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor\RainbowAnimatedLpiExecutor_3Colours60Steps10LengthStartFar_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor\RainbowAnimatedLpiExecutor_3Colours60Steps10Length_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\RainbowAnimatedLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_Head50PercentRedBlue_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_HeadTail50PercentComplex1_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_HeadTail50PercentComplex2_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_HeadTail50PercentRedBlue_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_Tail50PercentRedBlue_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_VariableHeadTailRedBlue_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor\SliderAnimatedLpiExecutor_VariableNumberLeds50PercentHeadTailRedBlue_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\AnimatedLpiExecutors\SliderAnimatedLpiExecutor_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\LpiExecutorFactory_Tests.cpp" />
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\BlocksNonAnimatedLpiExecutor_UnitTests.cpp" />

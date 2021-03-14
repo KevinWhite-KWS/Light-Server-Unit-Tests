@@ -16,7 +16,7 @@ namespace LS {
 					TEST_METHOD(WhenValidSliderLpi_TrueReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000020FFFFFF000000");
+						LpiExecutor_Tester tester("030100000203434FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -29,7 +29,7 @@ namespace LS {
 					TEST_METHOD(WhenSliderWidth0_FalseReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000000FFFFFF000000");
+						LpiExecutor_Tester tester("030100000003434FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -42,7 +42,7 @@ namespace LS {
 					TEST_METHOD(WhenSliderWidth51_FalseReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000330FFFFFF000000");
+						LpiExecutor_Tester tester("030100003303434FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -55,7 +55,7 @@ namespace LS {
 					TEST_METHOD(WhenSliderWidth1_TrueReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000010FFFFFF000000");
+						LpiExecutor_Tester tester("030100000103434FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -68,7 +68,7 @@ namespace LS {
 					TEST_METHOD(WhenSliderWidth50_TrueReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000320FFFFFF000000");
+						LpiExecutor_Tester tester("030100003203434FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -81,7 +81,7 @@ namespace LS {
 					TEST_METHOD(WhenSliderWidth25_TrueReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000190FFFFFF000000");
+						LpiExecutor_Tester tester("030100001903434FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -94,7 +94,7 @@ namespace LS {
 					TEST_METHOD(WhenStartNearIs1_TrueReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000021FFFFFF000000");
+						LpiExecutor_Tester tester("030100000213434FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -107,7 +107,7 @@ namespace LS {
 					TEST_METHOD(WhenStartNearIs2_FalseReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000022FFFFFF000000");
+						LpiExecutor_Tester tester("030100000223434FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -120,7 +120,7 @@ namespace LS {
 					TEST_METHOD(WhenNoBackgroundColour_FalseReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000020FFFFFF");
+						LpiExecutor_Tester tester("030100000203434FFFFFF");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -133,7 +133,7 @@ namespace LS {
 					TEST_METHOD(WhenNoSliderColour_FalseReturned)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000020");
+						LpiExecutor_Tester tester("030100000203434");
 						SliderAnimatedLpiExecutor lpiExecutor;
 
 						// act
@@ -141,6 +141,84 @@ namespace LS {
 
 						// assert
 						Assert::IsFalse(lpiIsValid);
+					}
+
+					TEST_METHOD(WhenHeadLength101_FalseReturned)
+					{
+						// arrange
+						LpiExecutor_Tester tester("030100000206565FFFFFF000000");
+						SliderAnimatedLpiExecutor lpiExecutor;
+
+						// act
+						bool lpiIsValid = lpiExecutor.ValidateLpi(tester.GetExecutorParams());
+
+						// assert
+						Assert::IsFalse(lpiIsValid);
+					}
+
+					TEST_METHOD(WhenHeadLength100_TrueReturned)
+					{
+						// arrange
+						LpiExecutor_Tester tester("030100000206464FFFFFF000000");
+						SliderAnimatedLpiExecutor lpiExecutor;
+
+						// act
+						bool lpiIsValid = lpiExecutor.ValidateLpi(tester.GetExecutorParams());
+
+						// assert
+						Assert::IsTrue(lpiIsValid);
+					}
+
+					TEST_METHOD(WhenHeadLength00_TrueReturned)
+					{
+						// arrange
+						LpiExecutor_Tester tester("030100000200000FFFFFF000000");
+						SliderAnimatedLpiExecutor lpiExecutor;
+
+						// act
+						bool lpiIsValid = lpiExecutor.ValidateLpi(tester.GetExecutorParams());
+
+						// assert
+						Assert::IsTrue(lpiIsValid);
+					}
+
+					TEST_METHOD(WhenTailLength101_FalseReturned)
+					{
+						// arrange
+						LpiExecutor_Tester tester("030100000203265FFFFFF000000");
+						SliderAnimatedLpiExecutor lpiExecutor;
+
+						// act
+						bool lpiIsValid = lpiExecutor.ValidateLpi(tester.GetExecutorParams());
+
+						// assert
+						Assert::IsFalse(lpiIsValid);
+					}
+
+					TEST_METHOD(WhenTailLength100_TrueReturned)
+					{
+						// arrange
+						LpiExecutor_Tester tester("030100000203264FFFFFF000000");
+						SliderAnimatedLpiExecutor lpiExecutor;
+
+						// act
+						bool lpiIsValid = lpiExecutor.ValidateLpi(tester.GetExecutorParams());
+
+						// assert
+						Assert::IsTrue(lpiIsValid);
+					}
+
+					TEST_METHOD(WhenTailLength00_TrueReturned)
+					{
+						// arrange
+						LpiExecutor_Tester tester("030100000203200FFFFFF000000");
+						SliderAnimatedLpiExecutor lpiExecutor;
+
+						// act
+						bool lpiIsValid = lpiExecutor.ValidateLpi(tester.GetExecutorParams());
+
+						// assert
+						Assert::IsTrue(lpiIsValid);
 					}
 				};
 
@@ -230,7 +308,7 @@ namespace LS {
 					TEST_METHOD(WhenStartNear8LedsStep1_RIsSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000020FFFFFF000000");
+						LpiExecutor_Tester tester("030100000200000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -251,7 +329,7 @@ namespace LS {
 					TEST_METHOD(WhenStartNear8LedsStep2_RIsSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000020FFFFFF000000");
+						LpiExecutor_Tester tester("030100000200000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -273,7 +351,7 @@ namespace LS {
 					TEST_METHOD(WhenStartNear8LedsStep5_RIsSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000020FFFFFF000000");
+						LpiExecutor_Tester tester("030100000200000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -295,7 +373,7 @@ namespace LS {
 					TEST_METHOD(WhenStartNear8LedsStep7_RIsSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000020FFFFFF000000");
+						LpiExecutor_Tester tester("030100000200000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -316,7 +394,7 @@ namespace LS {
 					TEST_METHOD(WhenStartNear8LedsStep8_RIsNotSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000020FFFFFF000000");
+						LpiExecutor_Tester tester("030100000200000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -330,7 +408,7 @@ namespace LS {
 					TEST_METHOD(WhenStartFar8LedsStep1_RIsSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000021FFFFFF000000");
+						LpiExecutor_Tester tester("030100000210000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -351,7 +429,7 @@ namespace LS {
 					TEST_METHOD(WhenStartFar8LedsStep2_RIsSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000021FFFFFF000000");
+						LpiExecutor_Tester tester("030100000210000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -373,7 +451,7 @@ namespace LS {
 					TEST_METHOD(WhenStartFar8LedsStep5_RIsSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000021FFFFFF000000");
+						LpiExecutor_Tester tester("030100000210000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -395,7 +473,7 @@ namespace LS {
 					TEST_METHOD(WhenStartFar8LedsStep7_RIsSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000021FFFFFF000000");
+						LpiExecutor_Tester tester("030100000210000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -416,7 +494,7 @@ namespace LS {
 					TEST_METHOD(WhenStartFar8LedsStep8_RIsNotSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000021FFFFFF000000");
+						LpiExecutor_Tester tester("030100000210000FFFFFF000000");
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -430,7 +508,7 @@ namespace LS {
 					TEST_METHOD(WhenStartNear100LedsSliderWidth50Step25_RIsNotSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000320FFFFFF000000", 100);
+						LpiExecutor_Tester tester("030100003200000FFFFFF000000", 100);
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 
@@ -452,7 +530,7 @@ namespace LS {
 					TEST_METHOD(WhenStartFar100LedsSliderWidth50Step25_RIsNotSet)
 					{
 						// arrange
-						LpiExecutor_Tester tester("03010000321FFFFFF000000", 100);
+						LpiExecutor_Tester tester("030100003210000FFFFFF000000", 100);
 						SliderAnimatedLpiExecutor lpiExecutor;
 						LpiExecutorOutput output;
 

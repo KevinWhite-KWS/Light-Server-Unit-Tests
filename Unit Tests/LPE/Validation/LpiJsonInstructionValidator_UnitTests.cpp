@@ -127,7 +127,7 @@ namespace LS {
 					// arrange
 					InstructionValidatorTestingHelper testingHelper;
 					LpiJsonInstructionValidator lpInsValidator = LpiJsonInstructionValidator(&testingHelper.lpiFactory, &testingHelper.stringProcessor, &testingHelper.ledConfig);
-					JsonVariant* elementToValidate = testingHelper.GetJsonElementToValidate("{ 'instructions': [ '03010000020FF000000FF00'] }");
+					JsonVariant* elementToValidate = testingHelper.GetJsonElementToValidate("{ 'instructions': [ '030100000203232FF000000FF00'] }");
 					LPValidateResult result;
 					result.ResetResult(LPValidateCode::Valid);
 
