@@ -199,6 +199,8 @@
     <ClCompile Include="..\Light-Server\src\LPE\Validation\LpiJsonInstructionValidator.cpp" />
     <ClCompile Include="..\Light-Server\src\LPE\Validation\LpJsonValidator.cpp" />
     <ClCompile Include="..\Light-Server\src\LPE\Validation\RepeatJsonInstructionValidator.cpp" />
+    <ClCompile Include="..\Light-Server\src\Networking\EthernetUdpDiscoveryService.cpp" />
+    <ClCompile Include="..\Light-Server\src\Networking\UdpDiscoveryService.cpp" />
     <ClCompile Include="..\Light-Server\src\Orchastrator\LightServerOrchastrator.cpp" />
     <ClCompile Include="..\Light-Server\src\Orchastrator\Timer.cpp" />
     <ClCompile Include="..\Light-Server\src\Renderer\PixelRenderer.cpp" />
@@ -233,6 +235,7 @@
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\PatternNonAnimatedLpiExecutor_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\SolidNonAnimateLpiExecutor_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\LpiExecutors\NonAnimatedLpiExecutors\StochasticNonAnimatedLpiExecutor_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\LPE\Networking\EthernetUdpDiscoveryService_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\StateBuilder\JsonInstructionBuilderFactory_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\StateBuilder\LpJsonStateBuilder_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\StateBuilder\LpJsonState_UnitTests.cpp" />

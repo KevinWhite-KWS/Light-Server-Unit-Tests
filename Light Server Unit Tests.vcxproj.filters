@@ -282,6 +282,15 @@
     <ClCompile Include="Unit Tests\LPE\Effects\GradientEffect_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Networking\EthernetUdpDiscoveryService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Light-Server\src\Networking\UdpDiscoveryService.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Unit Tests\LPE\Networking\EthernetUdpDiscoveryService_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
