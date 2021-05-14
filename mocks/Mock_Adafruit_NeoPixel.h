@@ -63,6 +63,9 @@ namespace LS {
 			uint16_t numPixels(void) const {
 				return 0;
 			}
+
+			void updateLength(uint16_t n) {
+			}
 	};
 }
 #endif

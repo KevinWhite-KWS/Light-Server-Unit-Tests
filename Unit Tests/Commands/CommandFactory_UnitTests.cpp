@@ -5,6 +5,7 @@
 #include "../../../Light-Server/src/LPE/Validation/LpJsonValidator.h"
 #include "../../../Light-Server/src/LPE/StateBuilder/LpJsonStateBuilder.h"
 #include "../../../Light-Server/src/Orchastrator/IOrchastor.h"
+#include "../../../Light-Server/src/ConfigPersistance/IConfigPersistance.h"
 
 #include "../../ExternalDependencies/fakeit.hpp"
 
@@ -31,6 +32,7 @@ namespace LS {
 				StringProcessor stringProcessor;
 				StaticJsonDocument<1000> webDoc;
 				FixedSizeCharBuffer webResponse = FixedSizeCharBuffer(1000);
+				Mock<IConfigPersistance> mockConfigPersistance;
 				LEDConfig ledConfig = LEDConfig(8);
 				commandFactory = new CommandFactory();
 
@@ -41,7 +43,7 @@ namespace LS {
 				PowerOnCommand powerOnCommand = PowerOnCommand(&mockLightWebServer.get(), &mockPixelController.get(), &mockOrchastor.get(), &stringProcessor);
 				CheckPowerCommand checkPowerCommand = CheckPowerCommand(&mockLightWebServer.get(), &mockPixelController.get(), &webDoc, &webResponse);
 				GetAboutCommand getAboutCommand = GetAboutCommand(&mockLightWebServer.get(), &webDoc, &webResponse, &ledConfig);
-				SetLedsCommand setLedsCommand = SetLedsCommand(&mockLightWebServer.get(), &stringProcessor);
+				SetLedsCommand setLedsCommand = SetLedsCommand(&mockLightWebServer.get(), &stringProcessor, &ledConfig, &mockConfigPersistance.get(), &mockPixelController.get());
 
 				commandFactory->SetCommand(CommandType::NOAUTH, &noAuthCommand);
 				commandFactory->SetCommand(CommandType::INVALID, &invalidCommand);
