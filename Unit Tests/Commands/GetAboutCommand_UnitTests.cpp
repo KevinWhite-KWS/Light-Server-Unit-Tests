@@ -12,6 +12,8 @@ using namespace fakeit;
 
 // fakeit mocking framework: https://github.com/eranpeer/FakeIt
 
+#define BUFFER_JSON_RESPONSE_SIZE	200
+
 namespace LS {
 	namespace Commands {
 		TEST_CLASS(GetAboutCommand_ExecuteCommand)
@@ -22,9 +24,9 @@ namespace LS {
 				// arrange
 				Mock<ILightWebServer> mockLightWebServer;
 				When(Method(mockLightWebServer, RespondOK)).Return();
-				StaticJsonDocument<1000> webDoc;
+				StaticJsonDocument<BUFFER_JSON_RESPONSE_SIZE> webDoc;
 				FixedSizeCharBuffer webResponse = FixedSizeCharBuffer(1000);
-				LEDConfig ledConfig = LEDConfig(8);
+				LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 				GetAboutCommand command = GetAboutCommand(&mockLightWebServer.get(), &webDoc, &webResponse, &ledConfig);
 
 				// act
@@ -39,9 +41,9 @@ namespace LS {
 				// arrange
 				Mock<ILightWebServer> mockLightWebServer;
 				When(Method(mockLightWebServer, RespondOK)).Return();
-				StaticJsonDocument<1000> webDoc;
+				StaticJsonDocument<BUFFER_JSON_RESPONSE_SIZE> webDoc;
 				FixedSizeCharBuffer webResponse = FixedSizeCharBuffer(1000);
-				LEDConfig ledConfig = LEDConfig(8);
+				LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 				GetAboutCommand command = GetAboutCommand(&mockLightWebServer.get(), &webDoc, &webResponse, &ledConfig);
 
 				// act
@@ -57,9 +59,9 @@ namespace LS {
 				// arrange
 				Mock<ILightWebServer> mockLightWebServer;
 				When(Method(mockLightWebServer, RespondOK)).Return();
-				StaticJsonDocument<1000> webDoc;
+				StaticJsonDocument<BUFFER_JSON_RESPONSE_SIZE> webDoc;
 				FixedSizeCharBuffer webResponse = FixedSizeCharBuffer(1000);
-				LEDConfig ledConfig = LEDConfig(50);
+				LEDConfig ledConfig; ledConfig.numberOfLEDs = 50;
 				GetAboutCommand command = GetAboutCommand(&mockLightWebServer.get(), &webDoc, &webResponse, &ledConfig);
 
 				// act

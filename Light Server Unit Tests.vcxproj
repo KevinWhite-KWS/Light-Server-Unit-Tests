@@ -214,6 +214,7 @@
     <ClCompile Include="Unit Tests\Commands\NoAuthCommand_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Commands\PowerOffCommand_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\Commands\PowerOnCommand_UnitTests.cpp" />
+    <ClCompile Include="Unit Tests\Commands\SetLedsCommand_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LightWebServer_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\Effects\GradientEffect_UnitTests.cpp" />
     <ClCompile Include="Unit Tests\LPE\Executor\LpExecutor_FunctionalTests.cpp" />

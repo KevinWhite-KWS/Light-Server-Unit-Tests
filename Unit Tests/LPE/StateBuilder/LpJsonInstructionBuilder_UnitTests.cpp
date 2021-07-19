@@ -14,7 +14,8 @@ namespace LS {
 				TEST_METHOD(WhenNullJsonVariant_NullReturned)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					LpJsonInstructionBuilder builder(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -31,7 +32,8 @@ namespace LS {
 				TEST_METHOD(WhenNullState_NullReturned)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					LpJsonInstructionBuilder builder(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -47,7 +49,8 @@ namespace LS {
 				TEST_METHOD(WhenValidLpi_LpInstructionReturned)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					LpJsonInstructionBuilder builder(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -68,7 +71,8 @@ namespace LS {
 				TEST_METHOD(WhenValidLpi_LpInstructionContainsLpi)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					LpJsonInstructionBuilder builder(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -90,7 +94,8 @@ namespace LS {
 				TEST_METHOD(WhenValidLpi_DurationSet)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					LpJsonInstructionBuilder builder(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -111,7 +116,8 @@ namespace LS {
 				TEST_METHOD(WhenValidLpi_StepsSet)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					LpJsonInstructionBuilder builder(&lpiExecutorFactory, &stringProcessor, &ledConfig);

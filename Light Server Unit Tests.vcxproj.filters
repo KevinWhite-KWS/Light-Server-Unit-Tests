@@ -291,6 +291,9 @@
     <ClCompile Include="Unit Tests\LPE\Networking\EthernetUdpDiscoveryService_UnitTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Unit Tests\Commands\SetLedsCommand_UnitTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">

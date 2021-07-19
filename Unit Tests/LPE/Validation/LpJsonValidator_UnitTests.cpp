@@ -12,7 +12,7 @@ namespace LS {
 				TEST_METHOD(WhenNullLp_NoInstructionsReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -30,7 +30,7 @@ namespace LS {
 				TEST_METHOD(WhenMissingName_MissingMandatoryPropertiesReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -57,7 +57,7 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenMissingInstructions_NoInstructionsReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -82,7 +82,7 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenInvalidInstruction_InvalidInstructionReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -109,7 +109,7 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenNoInstructionsInRepeat_NoInstructionsInLoopReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -140,7 +140,7 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenTwoInfiniteLoops_OnlyOneInfiniteLoopAllowedReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -182,7 +182,7 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenNoInstructionsInRepeatInRepeat_NoInstructionsInLoopReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -220,7 +220,7 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenMalformedJson_MissingMandatoryPropertiesReturn)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -247,7 +247,7 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenMultipleValidLpis_ValidReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -277,7 +277,7 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenMultipleRepeats_ValidReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);

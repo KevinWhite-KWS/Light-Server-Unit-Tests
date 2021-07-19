@@ -12,7 +12,7 @@ namespace LS {
 				TEST_METHOD(WhenLpiType_LpiValidatorReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -28,7 +28,7 @@ namespace LS {
 				TEST_METHOD(WhenRepeatType_RepeatValidatorReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionValidatorFactory validatorFactory = JsonInstructionValidatorFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);

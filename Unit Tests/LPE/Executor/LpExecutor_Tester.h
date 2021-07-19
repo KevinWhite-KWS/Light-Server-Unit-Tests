@@ -44,7 +44,8 @@ namespace LS {
 
 					// load the light program state
 					LpJsonState state;
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					// LPIFactory lpiFactory(&ledConfig, &stringProcessor);
 					LpiExecutorFactory lpiExecutorFactory;

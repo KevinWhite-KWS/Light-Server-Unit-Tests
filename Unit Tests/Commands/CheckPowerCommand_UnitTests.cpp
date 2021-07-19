@@ -12,6 +12,8 @@ using namespace fakeit;
 
 // fakeit mocking framework: https://github.com/eranpeer/FakeIt
 
+#define BUFFER_JSON_RESPONSE_SIZE	200
+
 namespace LS {
 	namespace Commands {
 		TEST_CLASS(CheckPower_ExecuteCommand)
@@ -25,7 +27,7 @@ namespace LS {
 				Mock<IPixelController> mockPixelController;
 				When(Method(mockPixelController, numPixels)).AlwaysReturn(8);
 				When(Method(mockPixelController, getPixelColor)).AlwaysReturn(0);
-				StaticJsonDocument<1000> webDoc;
+				StaticJsonDocument<BUFFER_JSON_RESPONSE_SIZE> webDoc;
 				FixedSizeCharBuffer webResponse = FixedSizeCharBuffer(1000);
 				CheckPowerCommand command = CheckPowerCommand(&mockLightWebServer.get(), &mockPixelController.get(), &webDoc, &webResponse);
 
@@ -44,7 +46,7 @@ namespace LS {
 				Mock<IPixelController> mockPixelController;
 				When(Method(mockPixelController, numPixels)).AlwaysReturn(8);
 				When(Method(mockPixelController, getPixelColor)).AlwaysReturn(0);
-				StaticJsonDocument<1000> webDoc;
+				StaticJsonDocument<BUFFER_JSON_RESPONSE_SIZE> webDoc;
 				FixedSizeCharBuffer webResponse = FixedSizeCharBuffer(1000);
 				CheckPowerCommand command = CheckPowerCommand(&mockLightWebServer.get(), &mockPixelController.get(), &webDoc, &webResponse);
 
@@ -64,7 +66,7 @@ namespace LS {
 				Mock<IPixelController> mockPixelController;
 				When(Method(mockPixelController, numPixels)).AlwaysReturn(8);
 				When(Method(mockPixelController, getPixelColor)).AlwaysReturn(255);
-				StaticJsonDocument<1000> webDoc;
+				StaticJsonDocument<BUFFER_JSON_RESPONSE_SIZE> webDoc;
 				FixedSizeCharBuffer webResponse = FixedSizeCharBuffer(1000);
 				CheckPowerCommand command = CheckPowerCommand(&mockLightWebServer.get(), &mockPixelController.get(), &webDoc, &webResponse);
 
@@ -84,7 +86,7 @@ namespace LS {
 				Mock<IPixelController> mockPixelController;
 				When(Method(mockPixelController, numPixels)).AlwaysReturn(8);
 				When(Method(mockPixelController, getPixelColor)).AlwaysReturn(255);
-				StaticJsonDocument<1000> webDoc;
+				StaticJsonDocument<BUFFER_JSON_RESPONSE_SIZE> webDoc;
 				FixedSizeCharBuffer webResponse = FixedSizeCharBuffer(1000);
 				CheckPowerCommand command = CheckPowerCommand(&mockLightWebServer.get(), &mockPixelController.get(), &webDoc, &webResponse);
 

@@ -23,10 +23,17 @@ namespace LS {
 
 				// JsonVariant* elementToValdiate;
 			public:
-				LEDConfig ledConfig = LEDConfig(8);
+
+
+				LEDConfig ledConfig = LEDConfig();
 				StringProcessor stringProcessor;
 				// LPIFactory lpiFactory = LPIFactory(&ledConfig, &stringProcessor);
 				LpiExecutorFactory lpiFactory;
+
+				InstructionValidatorTestingHelper() {
+					ledConfig.numberOfLEDs = 8;
+				}
+
 
 				JsonVariant* GetJsonElementToValidate(const char* insBuffer) {
 					lpi.LoadFromBuffer(insBuffer);

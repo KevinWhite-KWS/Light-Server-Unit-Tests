@@ -14,6 +14,8 @@ using namespace fakeit;
 
 // fakeit mocking framework: https://github.com/eranpeer/FakeIt
 
+#define BUFFER_JSON_RESPONSE_SIZE		200
+
 namespace LS {
 	namespace Commands {
 		class CommandFactoryTestingHelper {
@@ -30,20 +32,21 @@ namespace LS {
 				Mock<IOrchastor> mockOrchastor;
 				Mock<IPixelController> mockPixelController;
 				StringProcessor stringProcessor;
-				StaticJsonDocument<1000> webDoc;
+				StaticJsonDocument<BUFFER_JSON_RESPONSE_SIZE> webDoc;
 				FixedSizeCharBuffer webResponse = FixedSizeCharBuffer(1000);
 				Mock<IConfigPersistance> mockConfigPersistance;
-				LEDConfig ledConfig = LEDConfig(8);
+				LEDConfig ledConfig = LEDConfig();
+				ledConfig.numberOfLEDs = 8;
 				commandFactory = new CommandFactory();
 
 				NoAuthCommand noAuthCommand = NoAuthCommand(&mockLightWebServer.get());
 				InvalidCommand invalidCommand = InvalidCommand(&mockLightWebServer.get());
-				LoadProgramCommand loadProgramCommand = LoadProgramCommand(&mockLightWebServer.get(), &lpBuffer, &mockValidator.get(), &mockStateBuilder.get(), &state);
+				LoadProgramCommand loadProgramCommand = LoadProgramCommand(&mockLightWebServer.get(), &mockValidator.get(), &mockStateBuilder.get(), &state);
 				PowerOffCommand powerOffCommand = PowerOffCommand(&mockLightWebServer.get(), &mockPixelController.get(), &mockOrchastor.get());
 				PowerOnCommand powerOnCommand = PowerOnCommand(&mockLightWebServer.get(), &mockPixelController.get(), &mockOrchastor.get(), &stringProcessor);
 				CheckPowerCommand checkPowerCommand = CheckPowerCommand(&mockLightWebServer.get(), &mockPixelController.get(), &webDoc, &webResponse);
 				GetAboutCommand getAboutCommand = GetAboutCommand(&mockLightWebServer.get(), &webDoc, &webResponse, &ledConfig);
-				SetLedsCommand setLedsCommand = SetLedsCommand(&mockLightWebServer.get(), &stringProcessor, &ledConfig, &mockConfigPersistance.get(), &mockPixelController.get());
+				SetLedsCommand setLedsCommand = SetLedsCommand(&mockLightWebServer.get(), &stringProcessor, &ledConfig, &mockConfigPersistance.get(), &mockPixelController.get(), &state);
 
 				commandFactory->SetCommand(CommandType::NOAUTH, &noAuthCommand);
 				commandFactory->SetCommand(CommandType::INVALID, &invalidCommand);

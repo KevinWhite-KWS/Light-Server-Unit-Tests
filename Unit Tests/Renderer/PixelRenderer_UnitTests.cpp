@@ -36,7 +36,7 @@ namespace LS
 				TEST_METHOD(NullLpiParams_FalseReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -51,7 +51,7 @@ namespace LS
 				TEST_METHOD(NumberOfRIsIsZero_FalseReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -67,7 +67,7 @@ namespace LS
 				TEST_METHOD(FivePixelsToBlack_PixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -86,7 +86,7 @@ namespace LS
 				TEST_METHOD(FivePixelsToWhite_PixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -110,7 +110,7 @@ namespace LS
 				TEST_METHOD(OnePixelSetToWhite_PixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -134,7 +134,7 @@ namespace LS
 				TEST_METHOD(FivePixelsSetToRandomColour_PixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -159,7 +159,7 @@ namespace LS
 				TEST_METHOD(FivePixelsSetToRandomColour2_PixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -184,7 +184,7 @@ namespace LS
 				TEST_METHOD(FivePixelsSetToRandomColour3_PixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -209,7 +209,7 @@ namespace LS
 				TEST_METHOD(FivePixelsSetToRandomColour4_PixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -234,7 +234,7 @@ namespace LS
 				TEST_METHOD(RepeatWhite_PixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -260,7 +260,7 @@ namespace LS
 				TEST_METHOD(RepeatTwoGroups_PixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -287,7 +287,7 @@ namespace LS
 				TEST_METHOD(TooManyRIs_FirstFewPixelsSet)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(5);
+					LEDConfig ledConfig; ledConfig.numberOfLEDs = 5;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(5);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -321,7 +321,7 @@ namespace LS
 				TEST_METHOD(NoLedsOn_FalseReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					IPixelController* pixelController = &mockPixelController;
 					PixelRenderer pixelRenderer = PixelRenderer(pixelController, &ledConfig);
@@ -336,7 +336,7 @@ namespace LS
 				TEST_METHOD(FirstLedIsRed_TrueReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					mockPixelController.setPixelColor(0, 255, 0, 0);
 					IPixelController* pixelController = &mockPixelController;
@@ -352,7 +352,7 @@ namespace LS
 				TEST_METHOD(LastLedIsRed_TrueReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					mockPixelController.setPixelColor(7, 255, 0, 0);
 					IPixelController* pixelController = &mockPixelController;
@@ -368,7 +368,7 @@ namespace LS
 				TEST_METHOD(ThirdLedIsRed_TrueReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					mockPixelController.setPixelColor(2, 255, 0, 0);
 					IPixelController* pixelController = &mockPixelController;
@@ -384,7 +384,7 @@ namespace LS
 				TEST_METHOD(AllLedsAreRed_TrueReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					for (int i = 0; i < 8; i++) { mockPixelController.setPixelColor(i, 255, 0, 0); }
 					IPixelController* pixelController = &mockPixelController;
@@ -400,7 +400,7 @@ namespace LS
 				TEST_METHOD(OneLedIsNotQuiteBlack_TrueReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					mockPixelController.setPixelColor(4, 1, 0, 0);
 					IPixelController* pixelController = &mockPixelController;
@@ -416,7 +416,7 @@ namespace LS
 				TEST_METHOD(OneLedIsNotQuiteWhite_TrueReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					mockPixelController.setPixelColor(2, 254, 255, 255);
 					IPixelController* pixelController = &mockPixelController;
@@ -432,7 +432,7 @@ namespace LS
 				TEST_METHOD(OneLedIsARandomColour_TrueReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					mockPixelController.setPixelColor(2, 100, 213, 0);
 					IPixelController* pixelController = &mockPixelController;
@@ -448,7 +448,7 @@ namespace LS
 				TEST_METHOD(ThreeLedsAreARandomColour_TrueReturned)
 				{
 					// arrange
-					LEDConfig ledConfig = LEDConfig(8);
+					LEDConfig ledConfig = LEDConfig();ledConfig.numberOfLEDs = 8;
 					Mock_Adafruit_NeoPixel mockPixelController = Mock_Adafruit_NeoPixel(8);
 					mockPixelController.setPixelColor(2, 100, 213, 0);
 					mockPixelController.setPixelColor(4, 1, 2, 3);

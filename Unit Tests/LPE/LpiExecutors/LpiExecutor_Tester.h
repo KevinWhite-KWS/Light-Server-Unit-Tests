@@ -8,7 +8,7 @@ namespace LS {
 		namespace LpiExecutors {
 			class LpiExecutor_Tester {
 			private:
-				LEDConfig ledConfig = LEDConfig(8);
+				LEDConfig ledConfig;
 				StringProcessor stringProcessor;
 				FixedSizeCharBuffer lpiBuffer = FixedSizeCharBuffer(1000);
 				LpiExecutorParams lpiParams;

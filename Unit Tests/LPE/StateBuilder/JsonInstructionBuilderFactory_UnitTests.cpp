@@ -12,7 +12,8 @@ namespace LS {
 				TEST_METHOD(WhenLpiType_LpiInstructionBuilderReturned)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory builderFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -28,7 +29,8 @@ namespace LS {
 				TEST_METHOD(WhenRepeatType_RepeatInstructionBuilderReturned)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory builderFactory(&lpiExecutorFactory, &stringProcessor, &ledConfig);

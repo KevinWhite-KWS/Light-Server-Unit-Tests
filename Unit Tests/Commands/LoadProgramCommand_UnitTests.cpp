@@ -21,7 +21,7 @@ namespace LS {
 				FixedSizeCharBuffer* lpBuffer,
 				LpJsonValidator* lpValidator,
 				LpJsonStateBuilder* lpStateBuilder,
-				LpJsonState* lpState) : LoadProgramCommand(lightWebServer, lpBuffer, lpValidator, lpStateBuilder, lpState) {
+				LpJsonState* lpState) : LoadProgramCommand(lightWebServer, lpValidator, lpStateBuilder, lpState) {
 			}
 
 			void SetValidateResult(LPValidateCode code) {
@@ -37,7 +37,9 @@ namespace LS {
 			{
 				// arrange
 				char* loadingBuffer = " ";
+				FixedSizeCharBuffer webLoadingBuffer = FixedSizeCharBuffer(1000);
 				Mock<ILightWebServer> mockLightWebServer;
+				When(Method(mockLightWebServer, GetLoadingFixedSizeBuffer)).AlwaysReturn(&webLoadingBuffer);
 				When(Method(mockLightWebServer, RespondNoContent)).AlwaysReturn();
 				When(Method(mockLightWebServer, RespondError)).AlwaysReturn();
 				When(Method(mockLightWebServer, GetLoadingBuffer)).AlwaysReturn(loadingBuffer);
@@ -47,7 +49,8 @@ namespace LS {
 				Mock<LpJsonStateBuilder> mockLpStateBuilder;
 				When(Method(mockLpStateBuilder, BuildState)).Return();
 				LpJsonState lpState;
-				LoadProgramCommand_Stubbed command = LoadProgramCommand_Stubbed(&mockLightWebServer.get(),
+				LoadProgramCommand_Stubbed command = LoadProgramCommand_Stubbed(
+					&mockLightWebServer.get(),
 					&lpBuffer,
 					&mockLpValidator.get(),
 					&mockLpStateBuilder.get(),
@@ -65,7 +68,9 @@ namespace LS {
 			{
 				// arrange
 				char* loadingBuffer = " ";
+				FixedSizeCharBuffer webLoadingBuffer = FixedSizeCharBuffer(1000);
 				Mock<ILightWebServer> mockLightWebServer;
+				When(Method(mockLightWebServer, GetLoadingFixedSizeBuffer)).AlwaysReturn(&webLoadingBuffer);
 				When(Method(mockLightWebServer, RespondNoContent)).AlwaysReturn();
 				When(Method(mockLightWebServer, RespondError)).AlwaysReturn();
 				When(Method(mockLightWebServer, GetLoadingBuffer)).AlwaysReturn(loadingBuffer);
@@ -93,7 +98,9 @@ namespace LS {
 			{
 				// arrange
 				char* loadingBuffer = " ";
+				FixedSizeCharBuffer webLoadingBuffer = FixedSizeCharBuffer(1000);
 				Mock<ILightWebServer> mockLightWebServer;
+				When(Method(mockLightWebServer, GetLoadingFixedSizeBuffer)).AlwaysReturn(&webLoadingBuffer);
 				When(Method(mockLightWebServer, RespondNoContent)).AlwaysReturn();
 				When(Method(mockLightWebServer, RespondError)).AlwaysReturn();
 				When(Method(mockLightWebServer, GetLoadingBuffer)).AlwaysReturn(loadingBuffer);
@@ -121,7 +128,9 @@ namespace LS {
 			{
 				// arrange
 				char* loadingBuffer = " ";
+				FixedSizeCharBuffer webLoadingBuffer = FixedSizeCharBuffer(1000);
 				Mock<ILightWebServer> mockLightWebServer;
+				When(Method(mockLightWebServer, GetLoadingFixedSizeBuffer)).AlwaysReturn(&webLoadingBuffer);
 				When(Method(mockLightWebServer, RespondNoContent)).AlwaysReturn();
 				When(Method(mockLightWebServer, RespondError)).AlwaysReturn();
 				When(Method(mockLightWebServer, GetLoadingBuffer)).AlwaysReturn(loadingBuffer);
@@ -149,7 +158,9 @@ namespace LS {
 			{
 				// arrange
 				char* loadingBuffer = " ";
+				FixedSizeCharBuffer webLoadingBuffer = FixedSizeCharBuffer(1000);
 				Mock<ILightWebServer> mockLightWebServer;
+				When(Method(mockLightWebServer, GetLoadingFixedSizeBuffer)).AlwaysReturn(&webLoadingBuffer);
 				When(Method(mockLightWebServer, RespondNoContent)).AlwaysReturn();
 				When(Method(mockLightWebServer, RespondError)).AlwaysReturn();
 				When(Method(mockLightWebServer, GetLoadingBuffer)).AlwaysReturn(loadingBuffer);

@@ -13,7 +13,8 @@ namespace LS {
 				TEST_METHOD(WhenLpBufferNull_FalseReturned)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -31,7 +32,8 @@ namespace LS {
 				TEST_METHOD(WhenStateNull_FalseReturned)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -49,7 +51,8 @@ namespace LS {
 				TEST_METHOD(WhenValidParams_TrueReturned)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -67,7 +70,8 @@ namespace LS {
 				TEST_METHOD(WhenOneInstruction_TreeBuiltAndValid)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -97,7 +101,8 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenTwoInstructions_TreeBuiltAndValid)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -128,7 +133,8 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenOneLpInsInRepeat_TreeBuiltAndValid)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -167,7 +173,8 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenRepeatTwoInsRepeatOneIns_TreeBuiltAndValid)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -219,7 +226,8 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenRepeatTwoInsThenAnotherRepeatTwoIns_TreeBuiltAndValid)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -273,7 +281,8 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenRepeatTwoInsThenInsThenRepeatTwoIns_TreeBuiltAndValid)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -339,7 +348,8 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenComplexProgramWithManyRepeats_TreeBuiltAndValid)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -424,7 +434,8 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenComplexProgramWithSubsequentRepeats_TreeBuiltAndValid)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
@@ -495,7 +506,8 @@ lp.LoadFromBuffer(
 				TEST_METHOD(WhenOneFadeInstruction_TreeBuiltAndValid)
 				{
 					// arrange
-					LEDConfig ledConfig(8);
+					LEDConfig ledConfig;
+					ledConfig.numberOfLEDs = 8;
 					StringProcessor stringProcessor;
 					LpiExecutorFactory lpiExecutorFactory;
 					JsonInstructionBuilderFactory factory(&lpiExecutorFactory, &stringProcessor, &ledConfig);
